@@ -1,4 +1,4 @@
-﻿namespace zoomtest
+﻿namespace Motion_Dection
 {
     partial class Form1
     {

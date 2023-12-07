@@ -24,7 +24,7 @@ using Emgu.CV.Util;
 using System.Drawing;
 using System.IO;
 
-namespace zoomtest
+namespace Motion_Dection
 {
     public partial class Form1 : Form
     {

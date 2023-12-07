@@ -1,4 +1,4 @@
-namespace zoomtest
+namespace Motion_Dection
 {
     internal static class Program
     {
@@ -11,7 +11,7 @@ namespace zoomtest
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form2());
+            Application.Run(new MotionDetectionForm());
         }
     }
 }

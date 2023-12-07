@@ -16,12 +16,26 @@
     <PackageReference Include="Onvif" Version="1.0.14" />
     <PackageReference Include="Onvif.Media" Version="1.0.10" />
     <PackageReference Include="Onvif.PTZ" Version="1.0.10" />
+    <PackageReference Include="Xabe.FFmpeg" Version="5.2.6" />
+    <PackageReference Include="Xabe.FFmpeg.Downloader" Version="5.2.6" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Form1.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
