@@ -25,7 +25,7 @@ namespace MyService
 
         protected override void OnStart( string[] args )
         {
-           string rtsp = "rtsp://aivid:aivid_2022@192.168.222.50:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif";
+           string rtsp = "rtsp://aivid:aivid_2022@192.168.111.105:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif";
           //  string rtsp = " rtsp://192.168.222.253:8556/mgfmallgurugram";
        
             try
@@ -103,7 +103,7 @@ namespace MyService
 
         public async void DetectMotionMinimal( CancellationToken whiltLoopCondition, string rtsp )
         {
-            var outputFile = "rtsp://192.168.222.253:8556/aivid50";
+            var outputFile = "rtsp://cloud.aividtechvision.com:8556/aivid50";
             await _ffmpeg.LoadProfiles(rtsp, outputFile);
             const int motionThreshold = 10000;
             bool motionDetected = false;
@@ -220,7 +220,7 @@ namespace MyService
                 else
                 {
                     infoEvent($"Motion Detected ++++++++++++++++++++", 1);
-                 //   StartService("aivid50");
+                   // StartService("aivid50");
                     _ffmpeg.StartCapture();
                     motionDetected = true;
                     lastMotionDetectionTime = DateTime.Now;                                  

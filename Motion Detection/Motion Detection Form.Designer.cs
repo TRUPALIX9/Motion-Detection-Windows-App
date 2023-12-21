@@ -37,6 +37,7 @@ namespace Motion_Dection
             trackBar1 = new TrackBar();
             label1 = new Label();
             panel1 = new Panel();
+            button4 = new Button();
             pictureBox4 = new PictureBox();
             fpsLabel = new Label();
             comboBox1 = new ComboBox();
@@ -50,7 +51,6 @@ namespace Motion_Dection
             tabPage3 = new TabPage();
             pictureBox5 = new PictureBox();
             tabPage4 = new TabPage();
-            button4 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -137,6 +137,16 @@ namespace Motion_Dection
             panel1.Size = new Size(525, 392);
             panel1.TabIndex = 39;
             // 
+            // button4
+            // 
+            button4.Location = new Point(361, 248);
+            button4.Name = "button4";
+            button4.Size = new Size(75, 23);
+            button4.TabIndex = 46;
+            button4.Text = "Undo";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
             // pictureBox4
             // 
             pictureBox4.Location = new Point(348, 307);
@@ -158,7 +168,7 @@ namespace Motion_Dection
             // 
             comboBox1.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "rtsp://192.168.222.253:8556/mgfmallgurugram", "rtsp://aivid:aivid_2022@192.168.222.50:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif", "rtsp://aivid:aivid_2022@192.168.222.242/media/video1", "rtsp://192.168.222.253:8556/aivid50" });
+            comboBox1.Items.AddRange(new object[] { "rtsp://192.168.222.253:8556/mgfmallgurugram", "rtsp://aivid:aivid_2022@192.168.111.105:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif", "rtsp://192.168.222.253:8556/aivid50" });
             comboBox1.Location = new Point(315, 43);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(182, 33);
@@ -268,16 +278,6 @@ namespace Motion_Dection
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Output Frame";
             tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            button4.Location = new Point(361, 248);
-            button4.Name = "button4";
-            button4.Size = new Size(75, 23);
-            button4.TabIndex = 46;
-            button4.Text = "Undo";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += button4_Click;
             // 
             // MotionDetectionForm
             // 

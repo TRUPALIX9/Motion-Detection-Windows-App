@@ -1,10 +1,6 @@
 ﻿using Motion_Dection;
-using System;
 using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
 using Xabe.FFmpeg;
-using Xabe.FFmpeg.Downloader;
 
 namespace MyService
 {
@@ -18,13 +14,8 @@ namespace MyService
         public ffmpeg( MotionDetectionForm MotionDetectionForm )
         {
             _MotionDetectionForm = MotionDetectionForm;
-            _ = InitializeFFmpeg();
         }
 
-        public async Task InitializeFFmpeg()
-        {
-            await FFmpegDownloader.GetLatestVersion(FFmpegVersion.Full);
-        }
 
         public async Task LoadProfiles( string inputFile, string outputFile )
         {
@@ -51,10 +42,10 @@ namespace MyService
             try
             {
                 stopwatch.Start();
+                _MotionDetectionForm.printMe($"------------------------");
                 _cancellationTokenSource = new CancellationTokenSource();
                 _conversion.Start(_cancellationTokenSource.Token);
                 stopwatch.Stop();
-                _MotionDetectionForm.printMe($"Stream capture started. Time taken: {stopwatch.Elapsed.TotalSeconds} seconds");
                 stopwatch.Reset();
             }
             catch (OperationCanceledException)

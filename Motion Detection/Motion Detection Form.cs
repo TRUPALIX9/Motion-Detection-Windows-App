@@ -84,7 +84,7 @@ namespace Motion_Dection
 
         public async Task ShowRtsp( CancellationToken whileLoopCondition, string rtsp )
         {
-
+            int frameCounter = 0;
             try
             {
                 while (!whileLoopCondition.IsCancellationRequested)
@@ -95,11 +95,14 @@ namespace Motion_Dection
                     {
                         if (!capture.IsOpened)
                         {
-                               printMe("Failed to open the RTSP stream. Retrying in 1 second...");
+                            printMe("Failed to open the RTSP stream. Retrying in 1 second...");
                             continue;
                         }
                         stopwatch.Start();
-
+                        if(frameCounter > 10)
+                        {
+                            break;
+                        }
                         bool confirm = capture.Read(currentFrame);
                         stopwatch.Stop();
                         if (confirm && !currentFrame.IsEmpty)
@@ -107,12 +110,10 @@ namespace Motion_Dection
                             originalImage = currentFrame;
                             UpdateUI(ResizeImage(currentFrame, 640, 360));
                             CalculateFPS(); // Make sure this method is defined
-
-                            break;
+                            string timestamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+                          //  SaveFrameWithTimestamp(currentFrame, timestamp, frameCounter);
+                           // frameCounter++;
                         }
-
-
-
                     }
                 }
             }
@@ -125,7 +126,19 @@ namespace Motion_Dection
 
             }
         }
-
+        private async Task SaveFrameWithTimestamp( Mat frame, string timestamp, int frameNumber )
+        {
+            try
+            {
+                string filename = $"frame_{timestamp}_{frameNumber}.jpg";
+                CvInvoke.Imwrite(filename, frame);
+                printMe($"Saved frame: {filename}");
+            }
+            catch (Exception ex)
+            {
+                printMe($"Error saving frame: {ex.Message}");
+            }
+        }
         public async Task DetectMotion( CancellationToken whiltLoopCondition, string rtsp )
         {
             bool motionDetected = false;
@@ -274,9 +287,9 @@ namespace Motion_Dection
             }
 
             cancellationTokenSource = new CancellationTokenSource();
-            //await Task.Run(() => DetectMotion(cancellationTokenSource.Token, rtsp));
+            await Task.Run(() => DetectMotion(cancellationTokenSource.Token, rtsp));
             // await Task.Run(() => DetectMotionMinimal(cancellationTokenSource.Token, rtsp));
-            await Task.Run(() => ShowRtsp(cancellationTokenSource.Token, rtsp));
+          //  await Task.Run(() => ShowRtsp(cancellationTokenSource.Token, rtsp));
 
         }
 
@@ -456,27 +469,28 @@ namespace Motion_Dection
 
         private void button3_Click( object sender, EventArgs e )
         {
-             StopMotionDetection();
-            //_class1.StopCapture();
-      }
+            StopMotionDetection();
+            _class1.StopCapture();
+        }
         private async void button2_Click( object sender, EventArgs e )
         {
-            /*
-            var outputFile = "rtsp://192.168.222.253:8556/aivid242";
-           await _class1.LoadProfiles(comboBox1.SelectedItem.ToString(), outputFile);
+
+            /*  var outputFile = "rtsp://cloud.aividtechvision.com:8556/aivid50";
+          //  var outputFile = "C:\\Users\\Aivid11\\source\\repos\\TRUPALIX9\\Motion-Detection-Windows-App\\Motion Detection\\Output.mp4";
+
+            await _class1.LoadProfiles(comboBox1.SelectedItem.ToString(), outputFile);
             stopwatch.Start();
             _class1.StartCapture();
             stopwatch.Stop();
             CalculateFPS();
-            */
-            
+         */
             // getconfiguration(textBox1.Text, textBox2.Text, textBox3.Text, "80", 0);
-            printMe("Detection Started for" + Environment.NewLine + comboBox1.SelectedItem.ToString());
-            _ = StartMotionDetection(comboBox1.SelectedItem.ToString());
+            //printMe("Detection Started for" + Environment.NewLine + comboBox1.SelectedItem.ToString());
+             _ = StartMotionDetection(comboBox1.SelectedItem.ToString());
             StartDateTimeUpdater();
             button2.Enabled = false;
             pictureBox4.BackColor = Color.White;
-            
+
         }
         #endregion
 
@@ -592,7 +606,7 @@ namespace Motion_Dection
 
         private void DrawingForm_MouseClick( object sender, MouseEventArgs e )
         {
-            if(pictureBox1.Image  != null)
+            if (pictureBox1.Image != null)
             {
                 // On the first click, capture the starting point
                 double xScale = originalImage.Width / pictureBox1.Width;
@@ -647,12 +661,12 @@ namespace Motion_Dection
 
         private void button4_Click( object sender, EventArgs e )
         {
-            if (roiList.Count >1 )
+            if (roiList.Count > 1)
             {
                 roiList.Remove(roiList[roiList.Count - 1]);
                 drawAndUpdateImage(false);
             }
-     
+
         }
     }
 }
