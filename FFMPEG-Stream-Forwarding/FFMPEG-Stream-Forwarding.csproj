@@ -11,10 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FFMpegCore" Version="5.1.0" />
-    <PackageReference Include="vocaluxe.dependencies.netfwtypelib" Version="1.0.1" />
     <PackageReference Include="Xabe.FFmpeg" Version="5.2.6" />
-    <PackageReference Include="xFFmpeg.NET" Version="7.2.0" />
   </ItemGroup>
 
   <ItemGroup>
