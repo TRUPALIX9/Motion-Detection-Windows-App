@@ -24,7 +24,7 @@
 
 Plain motion detection on an IP camera fires on everything in the frame: a passing car, a tree, the road outside the gate. ZoneWatch reads the camera's RTSP stream, finds moving objects by frame differencing with OpenCV (through Emgu CV), and counts an object only when its centre falls inside a polygon you draw on the video.
 
-It is a personal project (C#, late 2023). The Visual Studio solution holds three programs: the ZoneWatch WinForms app with an ONVIF PTZ window, a headless Windows service that runs the same detection and writes to the Event Log, and a small FFmpeg tool that relays one RTSP stream to another.
+It was written in C# in late 2023. The Visual Studio solution holds three programs: the ZoneWatch WinForms app with an ONVIF PTZ window, a headless Windows service that runs the same detection and writes to the Event Log, and a small FFmpeg tool that relays one RTSP stream to another.
 
 ## Features
 
@@ -127,7 +127,7 @@ dotnet run --project "Motion Detection/Motion Detection.csproj"
 
 | Variable | Required | Description |
 |---|---|---|
-| `ZONEWATCH_RTSP_URL` | Service only | Camera stream. Pre-fills the main window's URL box, the forwarding tool's input and the PTZ window's motion test |
+| `ZONEWATCH_RTSP_URL` | Service and PTZ motion test | Camera stream. Pre-fills the main window's URL box and the forwarding tool's input. The PTZ window's **Test Motion Detection** button has no URL box and reads only this variable |
 | `ZONEWATCH_RELAY_URL` | No | RTSP target: the forwarding tool's output box, and the service's relay while motion lasts |
 | `ZONEWATCH_PTZ_HOST` | No | Pre-fills the PTZ window's IP address box (`host` or `host:port`, default port 80) |
 | `ZONEWATCH_PTZ_USERNAME` | No | Pre-fills the PTZ window's username |
