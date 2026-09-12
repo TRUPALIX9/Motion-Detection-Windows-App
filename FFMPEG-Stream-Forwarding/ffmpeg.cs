@@ -17,6 +17,9 @@ namespace FFMPEG_Stream_Forwarding
             _service1 = service1;
         }
 
+        // True once Load Profiles has built the FFmpeg conversion.
+        public bool IsLoaded => _conversion != null;
+
  
         public async Task LoadProfiles( string inputFile, string outputFile )
         {

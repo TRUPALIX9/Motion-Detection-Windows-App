@@ -72,6 +72,8 @@
             txt_input.Name = "txt_input";
             txt_input.Size = new Size(328, 23);
             txt_input.TabIndex = 4;
+            txt_input.PlaceholderText = "Input RTSP URL (camera)";
+            txt_input.AccessibleName = "Input RTSP URL";
             // 
             // txt_output
             // 
@@ -79,6 +81,8 @@
             txt_output.Name = "txt_output";
             txt_output.Size = new Size(327, 23);
             txt_output.TabIndex = 5;
+            txt_output.PlaceholderText = "Output RTSP URL (relay target)";
+            txt_output.AccessibleName = "Output RTSP URL";
             // 
             // label1
             // 

@@ -15,6 +15,11 @@ namespace FFMPEG_Stream_Forwarding
 
         private void btn_start_Click( object sender, EventArgs e )
         {
+            if (!_class1.IsLoaded)
+            {
+                warningEvent("Click Load Profiles first to read the input stream, then Start Forwarding RTSP.");
+                return;
+            }
             btn_start.Enabled = false;
             _class1.StartCapture();
         }
