@@ -98,7 +98,7 @@
             button2.Name = "button2";
             button2.Size = new Size(229, 39);
             button2.TabIndex = 4;
-            button2.Text = "Call Relay";
+            button2.Text = "Test Motion Detection";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
@@ -139,7 +139,7 @@
             button5.Name = "button5";
             button5.Size = new Size(125, 31);
             button5.TabIndex = 8;
-            button5.Text = "Clear Logs";
+            button5.Text = "Parse RTSP URL";
             button5.UseVisualStyleBackColor = true;
             button5.Click += button5_Click;
             // 
@@ -232,6 +232,7 @@
             checkBox1.TabIndex = 18;
             checkBox1.Text = "relaytype";
             checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.Visible = false;
             // 
             // label6
             // 
@@ -242,6 +243,7 @@
             label6.Size = new Size(83, 20);
             label6.TabIndex = 24;
             label6.Text = "Username";
+            label6.Visible = false;
             // 
             // label7
             // 
@@ -252,6 +254,7 @@
             label7.Size = new Size(78, 20);
             label7.TabIndex = 23;
             label7.Text = "Password";
+            label7.Visible = false;
             // 
             // textBox5
             // 
@@ -260,6 +263,7 @@
             textBox5.Name = "textBox5";
             textBox5.Size = new Size(95, 26);
             textBox5.TabIndex = 21;
+            textBox5.Visible = false;
             // 
             // textBox6
             // 
@@ -268,6 +272,7 @@
             textBox6.Name = "textBox6";
             textBox6.Size = new Size(95, 26);
             textBox6.TabIndex = 20;
+            textBox6.Visible = false;
             // 
             // pictureBox1
             // 

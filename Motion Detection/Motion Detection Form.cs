@@ -674,5 +674,21 @@ namespace Motion_Dection
             }
 
         }
+
+        private Form1? ptzForm;
+
+        private void buttonPtz_Click( object sender, EventArgs e )
+        {
+            // Opens the ONVIF PTZ window once; a second click brings it to the front.
+            if (ptzForm == null || ptzForm.IsDisposed)
+            {
+                ptzForm = new Form1();
+                ptzForm.Show(this);
+            }
+            else
+            {
+                ptzForm.Activate();
+            }
+        }
     }
 }

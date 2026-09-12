@@ -42,15 +42,39 @@ namespace Motion_Dection
             textBox4.Text = "0.5";
         }
 
-        private void button1_Click( object sender, EventArgs e )
+        // The moves wait for several seconds; disable the move buttons instead of freezing the window.
+        private void SetMoveButtonsEnabled( bool enabled )
         {
-            continousMoveL(textBox1.Text, textBox2.Text, textBox3.Text, "80", 0);
+            button1.Enabled = enabled;
+            button3.Enabled = enabled;
+            button4.Enabled = enabled;
+            button6.Enabled = enabled;
         }
 
-        private void button3_Click( object sender, EventArgs e )
+        private async void button1_Click( object sender, EventArgs e )
         {
-            AbsoluteMoveL(textBox1.Text, textBox2.Text, textBox3.Text, "80", 0);
+            SetMoveButtonsEnabled(false);
+            try
+            {
+                await continousMoveL(textBox1.Text, textBox2.Text, textBox3.Text, "80", 0);
+            }
+            finally
+            {
+                SetMoveButtonsEnabled(true);
+            }
+        }
 
+        private async void button3_Click( object sender, EventArgs e )
+        {
+            SetMoveButtonsEnabled(false);
+            try
+            {
+                await AbsoluteMoveL(textBox1.Text, textBox2.Text, textBox3.Text, "80", 0);
+            }
+            finally
+            {
+                SetMoveButtonsEnabled(true);
+            }
         }
 
         private void button4_Click( object sender, EventArgs e )
@@ -59,46 +83,40 @@ namespace Motion_Dection
 
         }
 
-        public static string GetPtzOnvifUrl( string ipAddress, string port )
+        // Accepts "host" or "host:port" in the IP address box; otherwise uses the given port.
+        private static string BuildOnvifUrl( string ipAddress, string port, string path )
         {
             if (string.IsNullOrEmpty(ipAddress))
             {
                 throw new ArgumentNullException("ipAddress");
             }
 
-            UriBuilder uriBuilder = new UriBuilder("http://" + ipAddress + port + "/onvif/deivce_service");
-            string[] array = ipAddress.Split(':');
-            uriBuilder.Host = array[0];
-            if (array.Length == 2)
-            {
-                uriBuilder.Port = Convert.ToInt16(array[1]);
-            }
-
+            string[] array = ipAddress.Trim().Split(':');
+            int portNumber = array.Length == 2 ? Convert.ToInt32(array[1]) : Convert.ToInt32(port);
+            UriBuilder uriBuilder = new UriBuilder("http", array[0], portNumber, path);
             return uriBuilder.ToString();
+        }
+
+        public static string GetPtzOnvifUrl( string ipAddress, string port )
+        {
+            return BuildOnvifUrl(ipAddress, port, "/onvif/device_service");
         }
 
         public void printMe( string Message )
         {
+            // Motion test and ONVIF callbacks can run off the UI thread.
+            if (richTextBox1.InvokeRequired)
+            {
+                richTextBox1.Invoke(new Action(() => printMe(Message)));
+                return;
+            }
             richTextBox1.Text += Environment.NewLine + System.DateTime.Now.ToString() + Environment.NewLine + Message + Environment.NewLine;
         }
 
 
         public static string GetOnvisfUrl( string ipAddress, string port )
         {
-            if (string.IsNullOrEmpty(ipAddress))
-            {
-                throw new ArgumentNullException("ipAddress");
-            }
-
-            UriBuilder uriBuilder = new UriBuilder("http://" + ipAddress + port + "/onvif/media_service");
-            string[] array = ipAddress.Split(':');
-            uriBuilder.Host = array[0];
-            if (array.Length == 2)
-            {
-                uriBuilder.Port = Convert.ToInt16(array[1]);
-            }
-
-            return uriBuilder.ToString();
+            return BuildOnvifUrl(ipAddress, port, "/onvif/media_service");
         }
         public CustomBinding GetBindings()
         {
@@ -113,7 +131,7 @@ namespace Motion_Dection
         }
 
 
-        public void continousMoveL( string cameraAddress, string userName, string password, string port, decimal profileIndex )
+        public async Task continousMoveL( string cameraAddress, string userName, string password, string port, decimal profileIndex )
         {
             try
             {
@@ -138,10 +156,10 @@ namespace Motion_Dection
                     PTZSpeed velocity = new() { Zoom = new ptz.Vector1D { x = targetZoom } };
                     PTZSpeed velocity1 = new() { Zoom = new Vector1D { x = resp.Position.Zoom.x } };
                     ptzClient.ContinuousMove(profileToken, velocity, "PT10S");
-                    Thread.Sleep(10000);
+                    await Task.Delay(10000);
                     ptzClient.Stop(profileToken, false, true);
                     ptzClient.ContinuousMove(profileToken, velocity1, "PT10S");
-                    Thread.Sleep(10000);
+                    await Task.Delay(10000);
                     ptzClient.Stop(profileToken, false, true);
 
 
@@ -169,7 +187,7 @@ namespace Motion_Dection
 
             }
         }
-        public void AbsoluteMoveL( string cameraAddress, string userName, string password, string port, decimal profileIndex )
+        public async Task AbsoluteMoveL( string cameraAddress, string userName, string password, string port, decimal profileIndex )
         {
             try
             {
@@ -198,7 +216,7 @@ namespace Motion_Dection
                     PTZSpeed currentVelocity = new() { Zoom = new Vector1D { x = resp.Position.Zoom.x } };
                     printMe("Zooming for value " + resp.Position.Zoom.x.ToString());
                     ptzClient.AbsoluteMove(profileToken, targetPosition, targetVelocity);
-                    Thread.Sleep(Seconds * 1000);
+                    await Task.Delay(Seconds * 1000);
                     printMe("Reseting to original Zoom: " + targetZoom.ToString());
                     ptzClient.AbsoluteMove(profileToken, currentPosition, currentVelocity);
 
@@ -229,7 +247,7 @@ namespace Motion_Dection
             }
         }
 
-        public void realtiveMove( string cameraAddress, string userName, string password, string port, decimal profileIndex )
+        public async Task realtiveMove( string cameraAddress, string userName, string password, string port, decimal profileIndex )
         {
             try
             {
@@ -256,10 +274,10 @@ namespace Motion_Dection
                     PTZVector transaction = new PTZVector { Zoom = new ptz.Vector1D { x = 0.3F } };
                     PTZVector transaction1 = new PTZVector { Zoom = new ptz.Vector1D { x = -0.3F } };
                     ptzClient.RelativeMove(profileToken, transaction, velocity);
-                    Thread.Sleep(10000);
+                    await Task.Delay(10000);
                     ptzClient.Stop(profileToken, false, true);
                     ptzClient.RelativeMove(profileToken, transaction1, velocity1);
-                    Thread.Sleep(10000);
+                    await Task.Delay(10000);
                     ptzClient.Stop(profileToken, false, true);
                     var s = ptzClient.GetStatus(profileToken);
                     printMe("updated Zoom : " + s.Position.Zoom.x.ToString());
@@ -571,10 +589,17 @@ namespace Motion_Dection
             await Task.Run(() => DetectMotion());
         }
 
-        private void button6_Click( object sender, EventArgs e )
+        private async void button6_Click( object sender, EventArgs e )
         {
-            realtiveMove(textBox1.Text, textBox2.Text, textBox3.Text, "80", 0);
-
+            SetMoveButtonsEnabled(false);
+            try
+            {
+                await realtiveMove(textBox1.Text, textBox2.Text, textBox3.Text, "80", 0);
+            }
+            finally
+            {
+                SetMoveButtonsEnabled(true);
+            }
         }
     }
 }

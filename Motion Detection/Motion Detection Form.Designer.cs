@@ -38,6 +38,7 @@ namespace Motion_Dection
             label1 = new Label();
             panel1 = new Panel();
             button4 = new Button();
+            buttonPtz = new Button();
             pictureBox4 = new PictureBox();
             fpsLabel = new Label();
             comboBox1 = new ComboBox();
@@ -122,6 +123,7 @@ namespace Motion_Dection
             // 
             // panel1
             // 
+            panel1.Controls.Add(buttonPtz);
             panel1.Controls.Add(button4);
             panel1.Controls.Add(pictureBox4);
             panel1.Controls.Add(fpsLabel);
@@ -146,6 +148,16 @@ namespace Motion_Dection
             button4.Text = "Undo";
             button4.UseVisualStyleBackColor = true;
             button4.Click += button4_Click;
+            //
+            // buttonPtz
+            //
+            buttonPtz.Location = new Point(315, 276);
+            buttonPtz.Name = "buttonPtz";
+            buttonPtz.Size = new Size(182, 25);
+            buttonPtz.TabIndex = 47;
+            buttonPtz.Text = "PTZ Controls...";
+            buttonPtz.UseVisualStyleBackColor = true;
+            buttonPtz.Click += buttonPtz_Click;
             // 
             // pictureBox4
             // 
@@ -332,5 +344,6 @@ namespace Motion_Dection
         private TabPage tabPage4;
         private PictureBox pictureBox5;
         private Button button4;
+        private Button buttonPtz;
     }
 }
