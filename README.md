@@ -6,10 +6,10 @@
 
 <p align="center">
   <a href="https://trupalpatel.com/projects/motion-detection"><img src="https://img.shields.io/badge/Case_study-trupalpatel.com-2447D6?style=flat-square&amp;labelColor=050505" alt="Case study" /></a>
-  <img src="https://img.shields.io/badge/.NET_6-WinForms-512BD4?style=flat-square&amp;logo=dotnet&amp;logoColor=white" alt=".NET 6 WinForms" />
-  <img src="https://img.shields.io/badge/.NET_Framework-4.8.1-512BD4?style=flat-square&amp;logo=dotnet&amp;logoColor=white" alt=".NET Framework 4.8.1" />
-  <img src="https://img.shields.io/badge/Emgu_CV-4.8.1-5C3EE8?style=flat-square&amp;logo=opencv&amp;logoColor=white" alt="Emgu CV 4.8.1" />
-  <img src="https://img.shields.io/badge/FFmpeg-Xabe.FFmpeg_5.2.6-007808?style=flat-square&amp;logo=ffmpeg&amp;logoColor=white" alt="FFmpeg" />
+  <img src="https://img.shields.io/badge/.NET_6_WinForms-512BD4?style=flat-square&amp;logo=dotnet&amp;logoColor=white" alt=".NET 6 WinForms" />
+  <img src="https://img.shields.io/badge/.NET_Framework_4.8.1-512BD4?style=flat-square&amp;logo=dotnet&amp;logoColor=white" alt=".NET Framework 4.8.1" />
+  <img src="https://img.shields.io/badge/Emgu_CV_4.8.1-5C3EE8?style=flat-square&amp;logo=opencv&amp;logoColor=white" alt="Emgu CV 4.8.1" />
+  <img src="https://img.shields.io/badge/Xabe.FFmpeg_5.2.6-007808?style=flat-square&amp;logo=ffmpeg&amp;logoColor=white" alt="Xabe.FFmpeg 5.2.6" />
   <img src="https://img.shields.io/badge/Platform-Windows-0078D4?style=flat-square" alt="Platform: Windows" />
 </p>
 
