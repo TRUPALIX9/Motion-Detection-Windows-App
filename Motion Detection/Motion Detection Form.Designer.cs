@@ -288,7 +288,7 @@ namespace Motion_Dection
             Controls.Add(label1);
             Controls.Add(trackBar1);
             Name = "MotionDetectionForm";
-            Text = "Form2";
+            Text = "ZoneWatch - Motion Detection";
             Load += MotionDetectionForm_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();

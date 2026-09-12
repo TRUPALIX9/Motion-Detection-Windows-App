@@ -28,6 +28,8 @@ namespace MyService
 
             // Configure the service installer
             this.serviceInstaller.ServiceName = "MyService";
+            this.serviceInstaller.DisplayName = "ZoneWatch Motion Detection Service";
+            this.serviceInstaller.Description = "ZoneWatch: watches an RTSP camera for motion and writes events to the Application Event Log.";
             this.serviceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
 
             // Add the installers to the collection

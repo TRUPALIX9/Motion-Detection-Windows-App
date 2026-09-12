@@ -124,7 +124,7 @@
             Controls.Add(btn_stop);
             Controls.Add(btn_start);
             Name = "Form1";
-            Text = "Form1";
+            Text = "ZoneWatch - Stream Forwarding";
             ResumeLayout(false);
             PerformLayout();
         }
