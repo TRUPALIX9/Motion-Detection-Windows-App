@@ -1,0 +1,230 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" role="img" aria-labelledby="t d">
+<title id="t">ZoneWatch - drawing a motion zone</title>
+<desc id="d">The ZoneWatch main window on the Original Frame tab while detection runs. The user has clicked four points across the storage-yard drive aisle and the open zone outline is drawn in yellow; a double-click will close it. The indicator is still white because nothing has moved in the zone, and the log shows the previous run stopping.</desc>
+<defs>
+<linearGradient id="zw-canvas" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EEF1FA"/><stop offset="1" stop-color="#E1E7F6"/></linearGradient>
+<linearGradient id="zw-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B7C6D6"/><stop offset="0.18" stop-color="#D6DEE7"/></linearGradient>
+<linearGradient id="zw-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CFC6B5"/><stop offset="1" stop-color="#D9D1C1"/></linearGradient>
+<linearGradient id="zw-asphalt" x1="0" y1="176" x2="0" y2="360" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8E9298"/><stop offset="1" stop-color="#62676E"/></linearGradient>
+<radialGradient id="zw-vig" cx="50%" cy="50%" r="75%"><stop offset="0.55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.28"/></radialGradient>
+<clipPath id="zw-cam"><rect width="640" height="360"/></clipPath>
+<clipPath id="zw-rtb"><rect x="657" y="1" width="269" height="390"/></clipPath>
+<clipPath id="zw-cmb"><rect x="972" y="44" width="162" height="31"/></clipPath>
+<clipPath id="zw-win"><rect width="1200" height="476" rx="8"/></clipPath>
+<linearGradient id="zw-ibg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1A2856"/><stop offset="1" stop-color="#0B1226"/></linearGradient>
+<symbol id="zw-icon" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="url(#zw-ibg)"/><path d="M170 182H342L420 374H92Z" fill="#3D5CFF" fill-opacity="0.2" stroke="#5B7CFF" stroke-width="32" stroke-linejoin="round"/><rect x="196" y="138" width="120" height="180" fill="none" stroke="#FF4A43" stroke-width="30"/><circle cx="256" cy="228" r="22" fill="#FF4A43"/></symbol>
+<filter id="zw-shadow" x="-10%" y="-10%" width="120%" height="140%"><feGaussianBlur stdDeviation="16"/></filter>
+</defs>
+<rect width="1280" height="800" fill="url(#zw-canvas)"/>
+<g transform="translate(40 162)">
+<rect x="10" y="22" width="1180" height="460" rx="12" fill="#1A2856" fill-opacity="0.28" filter="url(#zw-shadow)"/>
+<g clip-path="url(#zw-win)">
+<rect width="1200" height="476" fill="#F0F0F0"/>
+<rect width="1200" height="32" fill="#F3F4F8"/>
+<use href="#zw-icon" x="12" y="8" width="16" height="16"/>
+<text x="40" y="20.5" font-family="'Segoe UI Variable Text','Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#1B1B1B">ZoneWatch - Motion Detection</text>
+<g stroke="#1B1B1B" stroke-width="1" fill="none">
+<path d="M1080 16.5H1090"/>
+<rect x="1126.5" y="11.5" width="9" height="9" rx="1.5"/>
+<path d="M1172 11L1182 21M1182 11L1172 21"/>
+</g>
+<g transform="translate(0 32) scale(1.016088)">
+<rect width="1181" height="437" fill="#F0F0F0"/>
+<rect x="2.5" y="22.5" width="648" height="367" fill="#FFFFFF" stroke="#D9D9D9"/>
+<rect x="94.5" y="2.5" width="120" height="20" fill="#F0F0F0" stroke="#D9D9D9"/>
+<text x="154.5" y="17" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#000000">Absolute Difference</text>
+<rect x="214.5" y="2.5" width="106" height="20" fill="#F0F0F0" stroke="#D9D9D9"/>
+<text x="267.5" y="17" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#000000">Extra Frame View</text>
+<rect x="320.5" y="2.5" width="84" height="20" fill="#F0F0F0" stroke="#D9D9D9"/>
+<text x="362.5" y="17" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#000000">Output Frame</text>
+<rect x="0.5" y="0.5" width="96" height="22.5" fill="#FFFFFF" stroke="#D9D9D9"/>
+<rect x="1" y="21.5" width="95" height="2" fill="#FFFFFF"/>
+<text x="48.5" y="15.5" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#000000">Original Frame</text>
+<g transform="translate(6 24)" clip-path="url(#zw-cam)">
+<rect width="640" height="360" fill="url(#zw-sky)"/>
+<path d="M0 46C30 32 50 40 70 34C95 26 120 38 140 32C170 24 190 36 220 30C250 22 280 34 310 29C340 24 370 36 400 28C430 20 460 32 490 27C520 22 560 33 590 26C610 22 630 28 640 26V60H0Z" fill="#71806C"/>
+<path d="M0 62C40 50 80 58 120 52C170 44 210 56 260 50C320 42 380 54 440 46C500 40 560 50 640 44V60H0Z" fill="#5E6E5B"/>
+<path d="M0 50L640 40V176L0 188Z" fill="url(#zw-wall)"/>
+<path d="M0 45L640 35V43L0 54Z" fill="#59616C"/>
+<path d="M0 54L640 43V46L0 57Z" fill="#000000" fill-opacity="0.12"/>
+<path d="M0 177L640 165V176L0 188Z" fill="#B3A995"/>
+<g transform="rotate(-1.07 320 64)"><rect x="236" y="56" width="168" height="16" rx="1.5" fill="#2F5D4A"/><text x="320" y="67.6" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="9.5" font-weight="700" letter-spacing="1.6" fill="#F4F1EA">CEDAR ROW STORAGE</text></g>
+<path d="M8 53.9 V187.8" stroke="#8E8676" stroke-width="3"/>
+<path d="M632 44.1 V176.2" stroke="#8E8676" stroke-width="3"/>
+<path d="M19 88.6L115 86.9V185.9L19 187.6Z" fill="#4F5A66"/>
+<path d="M22 91.6L112 89.9V185.9L22 187.6Z" fill="#6E7D8C"/>
+<path d="M22 98.6L112 96.9" stroke="#5A6875" stroke-width="1"/>
+<path d="M22 105.6L112 103.9" stroke="#5A6875" stroke-width="1"/>
+<path d="M22 112.6L112 110.9" stroke="#5A6875" stroke-width="1"/>
+<path d="M22 119.6L112 117.9" stroke="#5A6875" stroke-width="1"/>
+<path d="M22 126.6L112 124.9" stroke="#5A6875" stroke-width="1"/>
+<path d="M22 133.6L112 131.9" stroke="#5A6875" stroke-width="1"/>
+<path d="M22 140.6L112 138.9" stroke="#5A6875" stroke-width="1"/>
+<path d="M22 147.6L112 145.9" stroke="#5A6875" stroke-width="1"/>
+<path d="M22 154.6L112 152.9" stroke="#5A6875" stroke-width="1"/>
+<path d="M22 161.6L112 159.9" stroke="#5A6875" stroke-width="1"/>
+<path d="M22 168.6L112 166.9" stroke="#5A6875" stroke-width="1"/>
+<path d="M22 175.6L112 173.9" stroke="#5A6875" stroke-width="1"/>
+<path d="M22 182.6L112 180.9" stroke="#5A6875" stroke-width="1"/>
+<path d="M22 92.6L112 90.9" stroke="#8E9BA8" stroke-width="1"/>
+<rect x="61" y="176.7" width="12" height="3" fill="#39424C"/>
+<rect x="56" y="78.7" width="22" height="9" rx="1" fill="#F4F1EA"/>
+<text x="67" y="85.8" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="7.5" font-weight="700" fill="#2B2F35">112</text>
+<path d="M141 86.3L237 84.6V183.6L141 185.3Z" fill="#4F5A66"/>
+<path d="M144 89.3L234 87.6V183.6L144 185.3Z" fill="#6E7D8C"/>
+<path d="M144 96.3L234 94.6" stroke="#5A6875" stroke-width="1"/>
+<path d="M144 103.3L234 101.6" stroke="#5A6875" stroke-width="1"/>
+<path d="M144 110.3L234 108.6" stroke="#5A6875" stroke-width="1"/>
+<path d="M144 117.3L234 115.6" stroke="#5A6875" stroke-width="1"/>
+<path d="M144 124.3L234 122.6" stroke="#5A6875" stroke-width="1"/>
+<path d="M144 131.3L234 129.6" stroke="#5A6875" stroke-width="1"/>
+<path d="M144 138.3L234 136.6" stroke="#5A6875" stroke-width="1"/>
+<path d="M144 145.3L234 143.6" stroke="#5A6875" stroke-width="1"/>
+<path d="M144 152.3L234 150.6" stroke="#5A6875" stroke-width="1"/>
+<path d="M144 159.3L234 157.6" stroke="#5A6875" stroke-width="1"/>
+<path d="M144 166.3L234 164.6" stroke="#5A6875" stroke-width="1"/>
+<path d="M144 173.3L234 171.6" stroke="#5A6875" stroke-width="1"/>
+<path d="M144 180.3L234 178.6" stroke="#5A6875" stroke-width="1"/>
+<path d="M144 90.3L234 88.6" stroke="#8E9BA8" stroke-width="1"/>
+<rect x="183" y="174.5" width="12" height="3" fill="#39424C"/>
+<rect x="178" y="76.5" width="22" height="9" rx="1" fill="#F4F1EA"/>
+<text x="189" y="83.6" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="7.5" font-weight="700" fill="#2B2F35">113</text>
+<path d="M263 84L359 82.3V181.3L263 183Z" fill="#4F5A66"/>
+<path d="M266 87L356 85.3V181.3L266 183Z" fill="#262B31"/>
+<path d="M266 113L356 111.3V125.3L266 127Z" fill="#1A1E23"/>
+<g opacity="0.85"><rect x="272" y="159" width="26" height="22" fill="#8A6A45"/><rect x="274" y="141" width="22" height="18" fill="#7A5D3C"/><rect x="318" y="155" width="30" height="26" fill="#6E5536"/><rect x="322" y="139" width="20" height="16" fill="#8A6A45"/></g>
+<path d="M266 87L356 85.3V111.3L266 113Z" fill="#6E7D8C"/>
+<path d="M266 94L356 92.3" stroke="#5A6875" stroke-width="1"/>
+<path d="M266 101L356 99.3" stroke="#5A6875" stroke-width="1"/>
+<path d="M266 108L356 106.3" stroke="#5A6875" stroke-width="1"/>
+<path d="M266 113L356 111.3" stroke="#3E4751" stroke-width="2"/>
+<rect x="300" y="74.2" width="22" height="9" rx="1" fill="#F4F1EA"/>
+<text x="311" y="81.3" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="7.5" font-weight="700" fill="#2B2F35">114</text>
+<path d="M385 81.7L481 80V179L385 180.7Z" fill="#4F5A66"/>
+<path d="M388 84.7L478 83V179L388 180.7Z" fill="#6E7D8C"/>
+<path d="M388 91.7L478 90" stroke="#5A6875" stroke-width="1"/>
+<path d="M388 98.7L478 97" stroke="#5A6875" stroke-width="1"/>
+<path d="M388 105.7L478 104" stroke="#5A6875" stroke-width="1"/>
+<path d="M388 112.7L478 111" stroke="#5A6875" stroke-width="1"/>
+<path d="M388 119.7L478 118" stroke="#5A6875" stroke-width="1"/>
+<path d="M388 126.7L478 125" stroke="#5A6875" stroke-width="1"/>
+<path d="M388 133.7L478 132" stroke="#5A6875" stroke-width="1"/>
+<path d="M388 140.7L478 139" stroke="#5A6875" stroke-width="1"/>
+<path d="M388 147.7L478 146" stroke="#5A6875" stroke-width="1"/>
+<path d="M388 154.7L478 153" stroke="#5A6875" stroke-width="1"/>
+<path d="M388 161.7L478 160" stroke="#5A6875" stroke-width="1"/>
+<path d="M388 168.7L478 167" stroke="#5A6875" stroke-width="1"/>
+<path d="M388 175.7L478 174" stroke="#5A6875" stroke-width="1"/>
+<path d="M388 85.7L478 84" stroke="#8E9BA8" stroke-width="1"/>
+<rect x="427" y="169.9" width="12" height="3" fill="#39424C"/>
+<rect x="422" y="71.9" width="22" height="9" rx="1" fill="#F4F1EA"/>
+<text x="433" y="79" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="7.5" font-weight="700" fill="#2B2F35">115</text>
+<path d="M507 79.4L603 77.8V176.8L507 178.4Z" fill="#4F5A66"/>
+<path d="M510 82.4L600 80.8V176.8L510 178.4Z" fill="#6E7D8C"/>
+<path d="M510 89.4L600 87.8" stroke="#5A6875" stroke-width="1"/>
+<path d="M510 96.4L600 94.8" stroke="#5A6875" stroke-width="1"/>
+<path d="M510 103.4L600 101.8" stroke="#5A6875" stroke-width="1"/>
+<path d="M510 110.4L600 108.8" stroke="#5A6875" stroke-width="1"/>
+<path d="M510 117.4L600 115.8" stroke="#5A6875" stroke-width="1"/>
+<path d="M510 124.4L600 122.8" stroke="#5A6875" stroke-width="1"/>
+<path d="M510 131.4L600 129.8" stroke="#5A6875" stroke-width="1"/>
+<path d="M510 138.4L600 136.8" stroke="#5A6875" stroke-width="1"/>
+<path d="M510 145.4L600 143.8" stroke="#5A6875" stroke-width="1"/>
+<path d="M510 152.4L600 150.8" stroke="#5A6875" stroke-width="1"/>
+<path d="M510 159.4L600 157.8" stroke="#5A6875" stroke-width="1"/>
+<path d="M510 166.4L600 164.8" stroke="#5A6875" stroke-width="1"/>
+<path d="M510 173.4L600 171.8" stroke="#5A6875" stroke-width="1"/>
+<path d="M510 83.4L600 81.8" stroke="#8E9BA8" stroke-width="1"/>
+<rect x="549" y="167.6" width="12" height="3" fill="#39424C"/>
+<rect x="544" y="69.6" width="22" height="9" rx="1" fill="#F4F1EA"/>
+<text x="555" y="76.7" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="7.5" font-weight="700" fill="#2B2F35">116</text>
+<rect x="124" y="73.6" width="8" height="5" rx="1" fill="#3B434C"/><path d="M125 79.1h6" stroke="#F3E9C6" stroke-width="1.5"/>
+<rect x="246" y="71.3" width="8" height="5" rx="1" fill="#3B434C"/><path d="M247 76.8h6" stroke="#F3E9C6" stroke-width="1.5"/>
+<rect x="368" y="69" width="8" height="5" rx="1" fill="#3B434C"/><path d="M369 74.5h6" stroke="#F3E9C6" stroke-width="1.5"/>
+<rect x="490" y="66.7" width="8" height="5" rx="1" fill="#3B434C"/><path d="M491 72.2h6" stroke="#F3E9C6" stroke-width="1.5"/>
+<path d="M0 188L640 176V360H0Z" fill="url(#zw-asphalt)"/>
+<path d="M0 188L640 176V196L0 210Z" fill="#A8A49B"/>
+<path d="M0 188L640 176" stroke="#8C877C" stroke-width="1"/>
+<path d="M0 210L640 196" stroke="#D8B537" stroke-width="3"/>
+<path d="M0 288L640 264" stroke="#E4E1D6" stroke-width="3" stroke-dasharray="24 18" stroke-opacity="0.85"/>
+<path d="M30 360L44 330" stroke="#E4E1D6" stroke-width="3" stroke-opacity="0.8"/>
+<path d="M150 360L164 330" stroke="#E4E1D6" stroke-width="3" stroke-opacity="0.8"/>
+<path d="M270 360L284 330" stroke="#E4E1D6" stroke-width="3" stroke-opacity="0.8"/>
+<path d="M390 360L404 330" stroke="#E4E1D6" stroke-width="3" stroke-opacity="0.8"/>
+<path d="M510 360L524 330" stroke="#E4E1D6" stroke-width="3" stroke-opacity="0.8"/>
+<path d="M630 360L644 330" stroke="#E4E1D6" stroke-width="3" stroke-opacity="0.8"/>
+<g fill="#2F3338" fill-opacity="0.22"><ellipse cx="220" cy="304" rx="30" ry="6"/><ellipse cx="520" cy="326" rx="22" ry="5"/><ellipse cx="300" cy="238" rx="18" ry="4"/></g>
+<ellipse cx="128" cy="198.6" rx="6" ry="2" fill="#000" fill-opacity="0.2"/><rect x="124" y="175.6" width="8" height="22" fill="#E2B93B"/><rect x="124" y="181.6" width="8" height="3" fill="#2E2E2E"/><ellipse cx="128" cy="175.6" rx="4" ry="1.6" fill="#EFCB57"/>
+<ellipse cx="250" cy="196.3" rx="6" ry="2" fill="#000" fill-opacity="0.2"/><rect x="246" y="173.3" width="8" height="22" fill="#E2B93B"/><rect x="246" y="179.3" width="8" height="3" fill="#2E2E2E"/><ellipse cx="250" cy="173.3" rx="4" ry="1.6" fill="#EFCB57"/>
+<ellipse cx="372" cy="194" rx="6" ry="2" fill="#000" fill-opacity="0.2"/><rect x="368" y="171" width="8" height="22" fill="#E2B93B"/><rect x="368" y="177" width="8" height="3" fill="#2E2E2E"/><ellipse cx="372" cy="171" rx="4" ry="1.6" fill="#EFCB57"/>
+<ellipse cx="494" cy="191.7" rx="6" ry="2" fill="#000" fill-opacity="0.2"/><rect x="490" y="168.7" width="8" height="22" fill="#E2B93B"/><rect x="490" y="174.7" width="8" height="3" fill="#2E2E2E"/><ellipse cx="494" cy="168.7" rx="4" ry="1.6" fill="#EFCB57"/>
+<ellipse cx="604" cy="238" rx="70" ry="7" fill="#000" fill-opacity="0.25"/>
+<path d="M566 150H662V226H566Z" fill="#ECEEF0"/>
+<path d="M548 226V198L553 176Q557 162 566 158V226Z" fill="#E1E4E8"/>
+<path d="M552 192L556 174Q559 165 566 163V192Z" fill="#5F7182"/>
+<rect x="571" y="162" width="22" height="22" rx="2" fill="#5F7182"/>
+<path d="M598 156V224M566 156V224" stroke="#C4C9CF" stroke-width="1.2"/>
+<rect x="548" y="212" width="114" height="14" fill="#C9CED4"/>
+<rect x="548" y="200" width="5" height="7" rx="1" fill="#F3EFD9"/>
+<g><circle cx="568" cy="228" r="10" fill="#1F2226"/><circle cx="568" cy="228" r="4" fill="#8A9097"/><circle cx="634" cy="228" r="10" fill="#1F2226"/><circle cx="634" cy="228" r="4" fill="#8A9097"/></g>
+<text x="630" y="194" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="8" font-weight="700" fill="#2F5D4A">CEDAR ROW</text>
+<g transform="translate(-66 -40)">
+<ellipse cx="414" cy="305" rx="48" ry="5" fill="#000" fill-opacity="0.3"/>
+<g transform="rotate(-20 438 302)"><rect x="440" y="272" width="36" height="28" fill="#B98B55"/><path d="M458 272V300" stroke="#D9C29A" stroke-width="4"/><rect x="441" y="246" width="33" height="26" fill="#A87C4B"/><path d="M457.5 246V272" stroke="#D9C29A" stroke-width="4"/><rect x="442" y="224" width="29" height="22" fill="#BE9361"/><path d="M456.5 224V246" stroke="#D9C29A" stroke-width="4"/><path d="M440 272H476M441 246H474" stroke="#8E6A3E" stroke-width="1"/><path d="M438 302V218M434 302V220" stroke="#2A2D31" stroke-width="3" stroke-linecap="round"/><path d="M432 218H440" stroke="#2A2D31" stroke-width="4" stroke-linecap="round"/><path d="M436 302H478" stroke="#2A2D31" stroke-width="3"/></g>
+<circle cx="441" cy="299" r="8" fill="#1F2226"/><circle cx="441" cy="299" r="3" fill="#8A9097"/>
+<path d="M379 255L367 298M387 255L398 298" stroke="#34425C" stroke-width="8" stroke-linecap="round"/>
+<ellipse cx="366" cy="300" rx="6" ry="3" fill="#1B1B1B"/><ellipse cx="401" cy="300" rx="6" ry="3" fill="#1B1B1B"/>
+<path d="M369 216Q381 209 394 216L396 259H367Z" fill="#2F5140"/>
+<path d="M368 244H395" stroke="#CFD6DA" stroke-width="3"/>
+<path d="M391 221L410 229" stroke="#2F5140" stroke-width="7" stroke-linecap="round"/>
+<circle cx="412" cy="230" r="3.6" fill="#C08A66"/>
+<path d="M378 210V215H386V210Z" fill="#B07C5A"/>
+<circle cx="382" cy="203" r="8.5" fill="#C08A66"/>
+<path d="M373.5 202Q374 193 382 193Q390 193 390.5 202Z" fill="#2A2A2E"/>
+</g>
+<rect width="640" height="360" fill="url(#zw-vig)"/>
+<text x="11" y="19" text-anchor="start" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#000" fill-opacity="0.55">2026-03-14 16:41:33</text><text x="10" y="18" text-anchor="start" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#FFFFFF">2026-03-14 16:41:33</text>
+<text x="11" y="351" text-anchor="start" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#000" fill-opacity="0.55">YARD CAM 02</text><text x="10" y="350" text-anchor="start" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#FFFFFF">YARD CAM 02</text>
+<path d="M150 182L478 176L604 262L572 350" fill="none" stroke="#F0FC03" stroke-width="2"/>
+<path d="M135 334V351L139 347.2L141.8 353.6L144.4 352.4L141.6 346.2H147Z" fill="#FFFFFF" stroke="#000000" stroke-width="1" stroke-linejoin="round"/>
+</g>
+<rect x="656.5" y="0.5" width="270" height="391" fill="#FFFFFF" stroke="#7A7A7A"/>
+<g clip-path="url(#zw-rtb)" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#000000">
+<text x="660" y="30">3/14/2026 4:40:19 PM</text>
+<text x="660" y="46">Stream capture stopped. Time taken: 3.4E-06</text>
+<text x="660" y="62">seconds</text>
+<text x="660" y="94">3/14/2026 4:40:19 PM</text>
+<text x="660" y="110">Frames: 2214, Elapsed Time: 88.6103342 s,</text>
+<text x="660" y="126">FPS: 24.9857990040173</text>
+</g>
+<text x="1041" y="25" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#000000">2026-03-14 16:41:33</text>
+<rect x="971.5" y="43.5" width="181" height="32" fill="#FFFFFF" stroke="#7A7A7A"/>
+<g clip-path="url(#zw-cmb)"><text x="975" y="66.5" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="18.67" fill="#000000">rtsp://10.20.4.12:554/cam/realmonitor?channel=1&amp;subtype=0</text></g>
+<path d="M1139.5 57.5l4.5 4.5 4.5-4.5" fill="none" stroke="#606060" stroke-width="1.2"/>
+<rect x="971.5" y="90.5" width="181" height="38" fill="#CCCCCC" stroke="#BFBFBF"/><text x="1062" y="115.1" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="16" fill="#838383">Start Motion Detection</text>
+<rect x="971.5" y="153.5" width="181" height="38" fill="#E1E1E1" stroke="#ADADAD"/><text x="1062" y="178.1" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="16" fill="#000000">Stop Motion Detection</text>
+<text x="972" y="224" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#000000">FPS: 25 Area : 0</text>
+<rect x="1017.5" y="248.5" width="74" height="22" fill="#E1E1E1" stroke="#ADADAD"/><text x="1054.5" y="263.7" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#000000">Undo</text>
+<rect x="971.5" y="276.5" width="181" height="24" fill="#E1E1E1" stroke="#ADADAD"/><text x="1062" y="292.7" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#000000">PTZ Controls...</text>
+<rect x="1004" y="307" width="113" height="34" fill="#FFFFFF"/>
+<rect x="971.5" y="347.5" width="181" height="38" fill="#E1E1E1" stroke="#ADADAD"/><text x="1062" y="372.1" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="16" fill="#000000">Clear Box</text>
+<rect x="8.5" y="408.5" width="1164" height="4" fill="#E7EAEA" stroke="#D6D6D6"/>
+<path d="M13 424V428" stroke="#C4C4C4"/>
+<path d="M128.5 424V428" stroke="#C4C4C4"/>
+<path d="M244 424V428" stroke="#C4C4C4"/>
+<path d="M359.5 424V428" stroke="#C4C4C4"/>
+<path d="M475 424V428" stroke="#C4C4C4"/>
+<path d="M590.5 424V428" stroke="#C4C4C4"/>
+<path d="M706 424V428" stroke="#C4C4C4"/>
+<path d="M821.5 424V428" stroke="#C4C4C4"/>
+<path d="M937 424V428" stroke="#C4C4C4"/>
+<path d="M1052.5 424V428" stroke="#C4C4C4"/>
+<path d="M1168 424V428" stroke="#C4C4C4"/>
+<path d="M8.5 400.5H19.5V415.5L14 421L8.5 415.5Z" fill="#007AD9" stroke="#0063B1"/>
+<rect x="133" y="421" width="31" height="15" fill="#F0F0F0"/>
+<text x="135" y="433" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#000000">1000</text>
+</g>
+</g>
+<rect x="0.5" y="0.5" width="1199" height="475" rx="7.5" fill="none" stroke="#C4CAD8"/>
+</g>
+</svg>
