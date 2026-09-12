@@ -8,9 +8,9 @@ namespace FFMPEG_Stream_Forwarding
         {
             InitializeComponent();
             _class1 = new ffmpeg(this);
-            txt_input.Text = "rtsp://aivid:aivid_2022@192.168.111.105:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif";
-            txt_output.Text = "rtsp://cloud.aividtechvision.com:8556/aivid50";
-            string executablePath = "\"C:\\Users\\Aivid11\\source\\repos\\TRUPALIX9\\Motion-Detection-Windows-App\\FFMPEG-Stream-Forwarding\\bin\\Debug\\net6.0-windows\\FFMPEG-Stream-Forwarding.exe\"";
+            // No camera or relay URLs in code: pre-fill from the environment only.
+            txt_input.Text = Environment.GetEnvironmentVariable("ZONEWATCH_RTSP_URL") ?? string.Empty;
+            txt_output.Text = Environment.GetEnvironmentVariable("ZONEWATCH_RELAY_URL") ?? string.Empty;
         }
 
         private void btn_start_Click( object sender, EventArgs e )

@@ -19,7 +19,18 @@ namespace Motion_Dection
         {
             InitializeComponent();
             _class1 = new ffmpeg(this);
-            comboBox1.SelectedIndex = 0;
+
+            // Camera URLs are never hard-coded. Type one into the box, or set
+            // ZONEWATCH_RTSP_URL before launching to pre-fill it.
+            string? rtspFromEnvironment = Environment.GetEnvironmentVariable("ZONEWATCH_RTSP_URL");
+            if (!string.IsNullOrWhiteSpace(rtspFromEnvironment))
+            {
+                comboBox1.Items.Add(rtspFromEnvironment.Trim());
+            }
+            if (comboBox1.Items.Count > 0)
+            {
+                comboBox1.SelectedIndex = 0;
+            }
 
         }
         #region Global Variables
@@ -474,19 +485,14 @@ namespace Motion_Dection
         }
         private async void button2_Click( object sender, EventArgs e )
         {
-
-            /*  var outputFile = "rtsp://cloud.aividtechvision.com:8556/aivid50";
-          //  var outputFile = "C:\\Users\\Aivid11\\source\\repos\\TRUPALIX9\\Motion-Detection-Windows-App\\Motion Detection\\Output.mp4";
-
-            await _class1.LoadProfiles(comboBox1.SelectedItem.ToString(), outputFile);
-            stopwatch.Start();
-            _class1.StartCapture();
-            stopwatch.Stop();
-            CalculateFPS();
-         */
-            // getconfiguration(textBox1.Text, textBox2.Text, textBox3.Text, "80", 0);
-            //printMe("Detection Started for" + Environment.NewLine + comboBox1.SelectedItem.ToString());
-             _ = StartMotionDetection(comboBox1.SelectedItem.ToString());
+            // Text covers both a picked item and a URL typed into the editable box.
+            string rtsp = comboBox1.Text.Trim();
+            if (string.IsNullOrEmpty(rtsp))
+            {
+                printMe("Enter the camera's RTSP URL in the box (or set ZONEWATCH_RTSP_URL), then press Start.");
+                return;
+            }
+            _ = StartMotionDetection(rtsp);
             StartDateTimeUpdater();
             button2.Enabled = false;
             pictureBox4.BackColor = Color.White;

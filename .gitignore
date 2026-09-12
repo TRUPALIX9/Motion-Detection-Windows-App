@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+# Local environment files (camera URLs and credentials). Never commit these.
+.env
+.env.*
+!.env.example

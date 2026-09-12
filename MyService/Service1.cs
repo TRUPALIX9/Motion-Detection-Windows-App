@@ -23,14 +23,31 @@ namespace MyService
             _ffmpeg = new ffmpeg(this);
         }
 
+        // Reads a setting from an environment variable first, then from appSettings in MyService.exe.config.
+        // Camera URLs and relay targets are never hard-coded.
+        internal static string GetSetting( string environmentVariable, string appSettingKey )
+        {
+            string value = Environment.GetEnvironmentVariable(environmentVariable);
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                value = System.Configuration.ConfigurationManager.AppSettings[appSettingKey];
+            }
+            return value == null ? string.Empty : value.Trim();
+        }
+
         protected override void OnStart( string[] args )
         {
-           string rtsp = "rtsp://aivid:aivid_2022@192.168.111.105:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif";
-          //  string rtsp = " rtsp://192.168.222.253:8556/mgfmallgurugram";
-       
+            string rtsp = GetSetting("ZONEWATCH_RTSP_URL", "RtspInputUrl");
+            if (string.IsNullOrEmpty(rtsp))
+            {
+                warningEvent("No camera configured. Set RtspInputUrl in MyService.exe.config (or the ZONEWATCH_RTSP_URL environment variable) and restart the service.");
+                return;
+            }
+
             try
             {
-                infoEvent("Service Started For " + rtsp);
+                // Log without the URL: it usually carries the camera's username and password.
+                infoEvent("Service started for the configured RTSP stream.");
                 _ = StartMotionDetection(rtsp);
 
             }
@@ -103,8 +120,15 @@ namespace MyService
 
         public async void DetectMotionMinimal( CancellationToken whiltLoopCondition, string rtsp )
         {
-            var outputFile = "rtsp://cloud.aividtechvision.com:8556/aivid50";
-            await _ffmpeg.LoadProfiles(rtsp, outputFile);
+            string outputFile = GetSetting("ZONEWATCH_RELAY_URL", "RelayOutputUrl");
+            if (string.IsNullOrEmpty(outputFile))
+            {
+                infoEvent("No relay output configured (RelayOutputUrl). Motion events are logged only.");
+            }
+            else
+            {
+                await _ffmpeg.LoadProfiles(rtsp, outputFile);
+            }
             const int motionThreshold = 10000;
             bool motionDetected = false;
             try
@@ -220,7 +244,6 @@ namespace MyService
                 else
                 {
                     infoEvent($"Motion Detected ++++++++++++++++++++", 1);
-                   // StartService("aivid50");
                     _ffmpeg.StartCapture();
                     motionDetected = true;
                     lastMotionDetectionTime = DateTime.Now;                                  
@@ -233,7 +256,6 @@ namespace MyService
                     {
                 {
                     infoEvent($"No Motion Detected! --------------",0);
-                  //  StopService("aivid50");
                     _ffmpeg.StopCapture();
                     motionDetected = false;
                     lastMotionDetectionTime = DateTime.Now;

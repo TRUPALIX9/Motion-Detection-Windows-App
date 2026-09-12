@@ -30,7 +30,6 @@ namespace MyService
             {
                 stopwatch.Start();
                 var mediaInfo = await FFmpeg.GetMediaInfo(inputFile);
-                _service1.warningEvent(inputFile+"   -- " + outputFile);
                 _conversion = Xabe.FFmpeg.FFmpeg.Conversions.New()
                                 .SetOutput(outputFile)
                                 .SetOutputFormat(Format.rtsp)
@@ -43,7 +42,8 @@ namespace MyService
             }
             catch (Exception ex)
             {
-                _service1.warningEvent("inputFile: "+ inputFile +Environment.NewLine + " OutputFile: " + outputFile + Environment.NewLine + "Error: "+ ex.Message.ToString() + Environment.NewLine + "StackTrace: " +ex.StackTrace.ToString(),664);
+                // The input and output URLs are left out of the Event Log because they can contain credentials.
+                _service1.warningEvent("Error loading the relay profile: " + ex.Message.ToString() + Environment.NewLine + "StackTrace: " + ex.StackTrace.ToString(), 664);
             }
         }
 

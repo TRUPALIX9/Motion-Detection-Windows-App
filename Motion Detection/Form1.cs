@@ -35,9 +35,10 @@ namespace Motion_Dection
 
         private void Form1_Load( object sender, EventArgs e )
         {
-            textBox1.Text = "192.168.222.102";
-            textBox2.Text = "admin";
-            textBox3.Text = "admin";
+            // No default camera address or credentials in code: pre-fill from the environment only.
+            textBox1.Text = Environment.GetEnvironmentVariable("ZONEWATCH_PTZ_HOST") ?? string.Empty;
+            textBox2.Text = Environment.GetEnvironmentVariable("ZONEWATCH_PTZ_USERNAME") ?? string.Empty;
+            textBox3.Text = Environment.GetEnvironmentVariable("ZONEWATCH_PTZ_PASSWORD") ?? string.Empty;
             textBox4.Text = "0.5";
         }
 
@@ -316,67 +317,21 @@ namespace Motion_Dection
                 MessageBox.Show(ex.ToString());
             }
         }
-        public void getconfiguration( string cameraAddress, string userName, string password, string port, decimal profileIndex )
-        {
-            try
-            {
-                string ptzurl = GetPtzOnvifUrl(cameraAddress, port);
-                CustomBinding customBinding = GetBindings();
-                DeviceAgent deviceManagement = new DeviceAgent(cameraAddress, userName, password);
-                DeviceClient deviceClient = new(customBinding, new EndpointAddress(ptzurl));
-                deviceClient.ClientCredentials.HttpDigest.ClientCredential.UserName = userName;
-                deviceClient.ClientCredentials.HttpDigest.ClientCredential.Password = password;
-
-                CapabilityCategory[] categories = new CapabilityCategory[]
-                {
-                            CapabilityCategory.All
-                };
-                User newUser = new User
-                {
-                    Username = "aividTestUser",
-                    Password = "Aivid_9999",
-                    UserLevel = UserLevel.Administrator,
-                };
-                User[] usersArray = { newUser };
-
-                deviceClient.CreateUsers(usersArray);
-
-            }
-            catch (System.IndexOutOfRangeException ex)
-            {
-                MessageBox.Show(ex.Message.ToString() + "No Channel Found on the Given No.");
-            }
-            catch (System.ServiceModel.Security.MessageSecurityException ex)
-            {
-                MessageBox.Show(ex.Message.ToString() + "Please Enter Correct Username Or Password");
-            }
-
-            catch (System.ServiceModel.CommunicationException ex)
-            {
-                MessageBox.Show(ex.Message.ToString());
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
-
         private void button5_Click( object sender, EventArgs e )
         {
             richTextBox1.Text = string.Empty;
             (string cameraAddress, string userName, string password, string zoomPort, bool isValid) = ParseRtspUrl(textBox1.Text);
             if (isValid)
             {
-                printMe(cameraAddress);
-                printMe(userName);
-                printMe(password);
-                printMe(zoomPort);
+                // The password is parsed but never written to the log.
+                printMe("Host: " + cameraAddress);
+                printMe("Username: " + userName);
+                printMe("Port: " + zoomPort);
 
             }
             else
             {
-                printMe("unvalid");
+                printMe("The IP address box does not contain an RTSP URL with a username and password.");
 
 
             }
@@ -384,7 +339,7 @@ namespace Motion_Dection
         /*
         public void DetectMotion()
         {
-            string rtsp = "rtsp://admin:admin_007@192.168.222.242/media/video1";
+            string rtsp = Environment.GetEnvironmentVariable("ZONEWATCH_RTSP_URL");
 
             using (var capture = new VideoCapture(rtsp))
             {
@@ -524,7 +479,12 @@ namespace Motion_Dection
         }
         public async Task DetectMotion()
         {
-            string rtsp = "rtsp://aivid:aivid_2022@192.168.222.50:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif";
+            string? rtsp = Environment.GetEnvironmentVariable("ZONEWATCH_RTSP_URL");
+            if (string.IsNullOrWhiteSpace(rtsp))
+            {
+                printMe("Set ZONEWATCH_RTSP_URL to the camera's RTSP URL to run the motion detection test.");
+                return;
+            }
             int motionThreshold = 10000;
             bool motionDetected = false;
 
@@ -602,7 +562,6 @@ namespace Motion_Dection
 
         private void button2_Click( object sender, EventArgs e )
         {
-            // getconfiguration(textBox1.Text, textBox2.Text, textBox3.Text, "80", 0);
             printMe("button Clicked");
             _ = StartMotionDetection();
 

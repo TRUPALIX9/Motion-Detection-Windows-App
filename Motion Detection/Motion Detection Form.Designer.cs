@@ -168,7 +168,6 @@ namespace Motion_Dection
             // 
             comboBox1.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "rtsp://192.168.222.253:8556/mgfmallgurugram", "rtsp://aivid:aivid_2022@192.168.111.105:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif", "rtsp://192.168.222.253:8556/aivid50" });
             comboBox1.Location = new Point(315, 43);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(182, 33);
