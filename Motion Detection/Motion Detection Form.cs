@@ -19,7 +19,19 @@ namespace Motion_Dection
         {
             InitializeComponent();
             _class1 = new ffmpeg(this);
-            comboBox1.SelectedIndex = 0;
+
+            // Camera URLs are never hard-coded. Type one into the box, or set
+            // ZONEWATCH_RTSP_URL before launching to pre-fill it.
+            string? rtspFromEnvironment = Environment.GetEnvironmentVariable("ZONEWATCH_RTSP_URL");
+            if (!string.IsNullOrWhiteSpace(rtspFromEnvironment))
+            {
+                comboBox1.Items.Add(rtspFromEnvironment.Trim());
+            }
+            if (comboBox1.Items.Count > 0)
+            {
+                comboBox1.SelectedIndex = 0;
+            }
+            StartDateTimeUpdater();
 
         }
         #region Global Variables
@@ -181,6 +193,7 @@ namespace Motion_Dection
                             }
                             previousFrame?.Dispose();
                             previousFrame = grayScale.Clone();
+                            grayScale.Dispose();
 
                         }
                         catch (Exception e)
@@ -207,12 +220,13 @@ namespace Motion_Dection
         }
         private void ProcessMotion( Mat previousFrame, Mat currentFrame, Mat grayScale, Mat threshold, out bool isMotion, out double totalArea )
         {
-            Mat frameDiff = new Mat();
+            // Per-frame native buffers: dispose them every frame instead of waiting for the GC.
+            using Mat frameDiff = new Mat();
             CvInvoke.AbsDiff(previousFrame, grayScale, frameDiff);
             CvInvoke.Threshold(frameDiff, threshold, 30, 255, ThresholdType.Binary);
             UpdateABSDiffFrameImage(ResizeImage(frameDiff, 640, 360));
-            Mat dilated = new Mat();
-            Mat kernel = CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(5, 5), new Point(-1, -1));
+            using Mat dilated = new Mat();
+            using Mat kernel = CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(5, 5), new Point(-1, -1));
             CvInvoke.Dilate(threshold, dilated, kernel, new Point(-1, -1), 2, BorderType.Default, new MCvScalar(0));
 
             List<List<Point>> contours = FindContours(dilated, out bool motionInZone, out Point point, 10000);
@@ -224,7 +238,7 @@ namespace Motion_Dection
                 boundingBoxes.Add(boundingBox);
             }
 
-            Mat frameWithBoxes = currentFrame.Clone();
+            using Mat frameWithBoxes = currentFrame.Clone();
             foreach (var boundingBox in boundingBoxes)
             {
                 CvInvoke.Rectangle(frameWithBoxes, boundingBox, new MCvScalar(0, 0, 255), 3);
@@ -246,6 +260,9 @@ namespace Motion_Dection
             if (isMotion)
             {
                 consecutiveMotionFrames++;
+                consecutiveNoMotionFrames = 0;
+                // The no-motion hold is measured from the last frame that still had motion.
+                lastMotionDetectionTime = DateTime.Now;
 
                 if (!motionDetected && consecutiveMotionFrames >= 3)
                 {
@@ -254,21 +271,23 @@ namespace Motion_Dection
                     pictureBox1.Invoke((MethodInvoker)delegate
                     {
                         pictureBox4.BackColor = System.Drawing.Color.Green;
+                        pictureBox4.AccessibleDescription = "Motion detected";
                     });
                 }
             }
             else
             {
                 consecutiveNoMotionFrames++;
+                consecutiveMotionFrames = 0;
 
                 if (motionDetected && (DateTime.Now - lastMotionDetectionTime) > noMotionPrintInterval && consecutiveNoMotionFrames >= 3)
                 {
                     // printMe($"No Motion Detected! --------------");
                     motionDetected = false;
-                    lastMotionDetectionTime = DateTime.Now;
                     pictureBox1.Invoke((MethodInvoker)delegate
                     {
                         pictureBox4.BackColor = System.Drawing.Color.Red;
+                        pictureBox4.AccessibleDescription = "No motion";
                     });
                 }
             }
@@ -298,9 +317,26 @@ namespace Motion_Dection
             cancellationTokenSource?.Cancel();
             button2.Enabled = true;
             cancellationTokenSource = null;
-            pictureBox1.Image?.Dispose();
-            pictureBox2.Image?.Dispose();
-            pictureBox3.Image?.Dispose();
+            // Detach before disposing: a PictureBox repainting a disposed Bitmap throws.
+            ClearImage(pictureBox1);
+            ClearImage(pictureBox2);
+            ClearImage(pictureBox3);
+            ClearImage(pictureBox5);
+        }
+
+        // Swap in a new frame and free the previous bitmap (otherwise one Bitmap leaks per frame).
+        private static void SetImage( PictureBox box, Image newImage )
+        {
+            Image? previous = box.Image;
+            box.Image = newImage;
+            previous?.Dispose();
+        }
+
+        private static void ClearImage( PictureBox box )
+        {
+            Image? previous = box.Image;
+            box.Image = null;
+            previous?.Dispose();
         }
         #endregion
 
@@ -355,9 +391,17 @@ namespace Motion_Dection
                 richTextBox1.Text += Environment.NewLine + System.DateTime.Now.ToString() + Environment.NewLine + Message + Environment.NewLine;
             }
         }
+        private System.Windows.Forms.Timer? dateTimeUpdateTimer;
+
         private void StartDateTimeUpdater()
         {
-            System.Windows.Forms.Timer dateTimeUpdateTimer = new System.Windows.Forms.Timer();
+            // One clock for the window's lifetime (it used to add another timer on every Start).
+            if (dateTimeUpdateTimer != null)
+            {
+                return;
+            }
+            UpdateCurrentDateTimeLabel();
+            dateTimeUpdateTimer = new System.Windows.Forms.Timer();
             dateTimeUpdateTimer.Interval = 1000;
             dateTimeUpdateTimer.Tick += ( s, e ) => UpdateCurrentDateTimeLabel();
             dateTimeUpdateTimer.Start();
@@ -389,7 +433,7 @@ namespace Motion_Dection
             {
                 pictureBox1.Width = frame.Width;
                 pictureBox1.Height = frame.Height;
-                pictureBox1.Image = frame.ToBitmap() ?? new Bitmap(10, 10);
+                SetImage(pictureBox1, frame.ToBitmap() ?? new Bitmap(10, 10));
             }
         }
         private void UpdateABSDiffFrameImage( Mat frame )
@@ -402,7 +446,7 @@ namespace Motion_Dection
             {
                 pictureBox2.Width = frame.Width;
                 pictureBox2.Height = frame.Height;
-                pictureBox2.Image = frame.ToBitmap() ?? new Bitmap(10, 10);
+                SetImage(pictureBox2, frame.ToBitmap() ?? new Bitmap(10, 10));
             }
         }
         private void UpdateExtraViewFrameImage( Mat frame )
@@ -415,7 +459,7 @@ namespace Motion_Dection
             {
                 pictureBox5.Width = frame.Width;
                 pictureBox5.Height = frame.Height;
-                pictureBox5.Image = frame.ToBitmap() ?? new Bitmap(10, 10);
+                SetImage(pictureBox5, frame.ToBitmap() ?? new Bitmap(10, 10));
             }
         }
 
@@ -454,7 +498,7 @@ namespace Motion_Dection
             {
                 pictureBox3.Width = frame.Width;
                 pictureBox3.Height = frame.Height;
-                pictureBox3.Image = frame.ToBitmap() ?? new Bitmap(10, 10);
+                SetImage(pictureBox3, frame.ToBitmap() ?? new Bitmap(10, 10));
             }
         }
 
@@ -474,20 +518,14 @@ namespace Motion_Dection
         }
         private async void button2_Click( object sender, EventArgs e )
         {
-
-            /*  var outputFile = "rtsp://cloud.aividtechvision.com:8556/aivid50";
-          //  var outputFile = "C:\\Users\\Aivid11\\source\\repos\\TRUPALIX9\\Motion-Detection-Windows-App\\Motion Detection\\Output.mp4";
-
-            await _class1.LoadProfiles(comboBox1.SelectedItem.ToString(), outputFile);
-            stopwatch.Start();
-            _class1.StartCapture();
-            stopwatch.Stop();
-            CalculateFPS();
-         */
-            // getconfiguration(textBox1.Text, textBox2.Text, textBox3.Text, "80", 0);
-            //printMe("Detection Started for" + Environment.NewLine + comboBox1.SelectedItem.ToString());
-             _ = StartMotionDetection(comboBox1.SelectedItem.ToString());
-            StartDateTimeUpdater();
+            // Text covers both a picked item and a URL typed into the editable box.
+            string rtsp = comboBox1.Text.Trim();
+            if (string.IsNullOrEmpty(rtsp))
+            {
+                printMe("Enter the camera's RTSP URL in the box (or set ZONEWATCH_RTSP_URL), then press Start.");
+                return;
+            }
+            _ = StartMotionDetection(rtsp);
             button2.Enabled = false;
             pictureBox4.BackColor = Color.White;
 
@@ -609,8 +647,9 @@ namespace Motion_Dection
             if (pictureBox1.Image != null)
             {
                 // On the first click, capture the starting point
-                double xScale = originalImage.Width / pictureBox1.Width;
-                double yScale = originalImage.Height / pictureBox1.Height;
+                // Cast first: int / int truncated the scale (e.g. 704/440 became 1, not 1.6).
+                double xScale = (double)originalImage.Width / pictureBox1.Width;
+                double yScale = (double)originalImage.Height / pictureBox1.Height;
                 lastPoint = new Point((int)(e.X * xScale), (int)(e.Y * yScale));
 
                 roiList.Add(lastPoint);
@@ -667,6 +706,22 @@ namespace Motion_Dection
                 drawAndUpdateImage(false);
             }
 
+        }
+
+        private Form1? ptzForm;
+
+        private void buttonPtz_Click( object sender, EventArgs e )
+        {
+            // Opens the ONVIF PTZ window once; a second click brings it to the front.
+            if (ptzForm == null || ptzForm.IsDisposed)
+            {
+                ptzForm = new Form1();
+                ptzForm.Show(this);
+            }
+            else
+            {
+                ptzForm.Activate();
+            }
         }
     }
 }

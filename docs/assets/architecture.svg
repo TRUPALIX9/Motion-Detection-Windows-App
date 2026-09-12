@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="t d">
+<title id="t">ZoneWatch architecture</title>
+<desc id="d">An IP camera on the camera network sends RTSP video to the ZoneWatch Motion Detection app and to the MyService Windows service on a Windows PC. The PTZ Controls window, opened from the main window, sends ONVIF SOAP 1.2 commands with HTTP digest auth to the camera. MyService writes motion events to the Windows Event Log and starts FFmpeg on motion; the Stream Forwarding tool starts and stops FFmpeg by hand. FFmpeg pulls the camera's RTSP stream and copies it to an RTSP server.</desc>
+<defs>
+<linearGradient id="zw-canvas" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EEF1FA"/><stop offset="1" stop-color="#E1E7F6"/></linearGradient>
+<linearGradient id="zw-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B7C6D6"/><stop offset="0.18" stop-color="#D6DEE7"/></linearGradient>
+<linearGradient id="zw-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CFC6B5"/><stop offset="1" stop-color="#D9D1C1"/></linearGradient>
+<linearGradient id="zw-asphalt" x1="0" y1="176" x2="0" y2="360" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8E9298"/><stop offset="1" stop-color="#62676E"/></linearGradient>
+<radialGradient id="zw-vig" cx="50%" cy="50%" r="75%"><stop offset="0.55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.28"/></radialGradient>
+<clipPath id="zw-cam"><rect width="640" height="360"/></clipPath>
+<clipPath id="zw-rtb"><rect x="657" y="1" width="269" height="390"/></clipPath>
+<clipPath id="zw-cmb"><rect x="972" y="44" width="162" height="31"/></clipPath>
+<clipPath id="zw-win"><rect width="1200" height="476" rx="8"/></clipPath>
+<linearGradient id="zw-ibg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1A2856"/><stop offset="1" stop-color="#0B1226"/></linearGradient>
+<symbol id="zw-icon" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="url(#zw-ibg)"/><path d="M170 182H342L420 374H92Z" fill="#3D5CFF" fill-opacity="0.2" stroke="#5B7CFF" stroke-width="32" stroke-linejoin="round"/><rect x="196" y="138" width="120" height="180" fill="none" stroke="#FF4A43" stroke-width="30"/><circle cx="256" cy="228" r="22" fill="#FF4A43"/></symbol>
+<filter id="zw-shadow" x="-10%" y="-10%" width="120%" height="140%"><feGaussianBlur stdDeviation="16"/></filter>
+<marker id="za-ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#7C93FF"/></marker><marker id="za-ahc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#B9C2DE"/></marker><linearGradient id="za-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#101A38"/><stop offset="1" stop-color="#0B1226"/></linearGradient>
+</defs>
+<rect width="1280" height="720" fill="url(#za-bg)"/>
+<use href="#zw-icon" x="48" y="34" width="44" height="44"/>
+<text x="106" y="51" font-family="'Cascadia Mono',Consolas,ui-monospace,Menlo,monospace" font-size="13" fill="#8F9BC4" letter-spacing="3">ARCHITECTURE</text>
+<text x="106" y="78" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="600" fill="#F3F5FB">How the ZoneWatch projects connect</text>
+<rect x="40" y="150" width="250" height="330" rx="16" fill="#0F1833" stroke="#2A3A70" stroke-dasharray="6 6"/>
+<text x="272" y="466" text-anchor="end" font-family="'Cascadia Mono',Consolas,ui-monospace,Menlo,monospace" font-size="12" fill="#8F9BC4" letter-spacing="2">CAMERA NETWORK</text>
+<rect x="330" y="110" width="590" height="580" rx="16" fill="#0F1833" stroke="#2A3A70" stroke-dasharray="6 6"/>
+<text x="902" y="676" text-anchor="end" font-family="'Cascadia Mono',Consolas,ui-monospace,Menlo,monospace" font-size="12" fill="#8F9BC4" letter-spacing="2">WINDOWS PC</text>
+<rect x="960" y="420" width="280" height="230" rx="16" fill="#0F1833" stroke="#2A3A70" stroke-dasharray="6 6"/>
+<text x="978" y="636" text-anchor="start" font-family="'Cascadia Mono',Consolas,ui-monospace,Menlo,monospace" font-size="12" fill="#8F9BC4" letter-spacing="2">RELAY TARGET</text>
+<rect x="60" y="200" width="210" height="250" rx="12" fill="#131E42" stroke="#2A3A70"/>
+<text x="78" y="232" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="17" font-weight="600" fill="#F3F5FB">IP camera</text>
+<text x="78" y="258" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">RTSP video stream</text>
+<text x="78" y="279" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">ONVIF device, media</text>
+<text x="78" y="300" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">and PTZ services</text>
+<text x="254" y="230" text-anchor="end" font-family="'Cascadia Mono',Consolas,ui-monospace,Menlo,monospace" font-size="11" fill="#7C93FF">RTSP</text>
+<rect x="350" y="150" width="250" height="150" rx="12" fill="#131E42" stroke="#2A3A70"/>
+<text x="368" y="182" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="17" font-weight="600" fill="#F3F5FB">Motion Detection</text>
+<text x="368" y="208" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">ZoneWatch main window</text>
+<text x="368" y="229" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">WinForms, .NET 6, Emgu CV</text>
+<text x="368" y="250" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">Frame diff + zone polygon</text>
+<text x="584" y="180" text-anchor="end" font-family="'Cascadia Mono',Consolas,ui-monospace,Menlo,monospace" font-size="11" fill="#7C93FF">APP</text>
+<rect x="650" y="150" width="250" height="150" rx="12" fill="#131E42" stroke="#2A3A70"/>
+<text x="668" y="182" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="17" font-weight="600" fill="#F3F5FB">PTZ Controls</text>
+<text x="668" y="208" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">Opened from the main window</text>
+<text x="668" y="229" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">Onvif / Onvif.PTZ (WCF)</text>
+<text x="668" y="250" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">Zoom-only moves</text>
+<text x="884" y="180" text-anchor="end" font-family="'Cascadia Mono',Consolas,ui-monospace,Menlo,monospace" font-size="11" fill="#7C93FF">APP</text>
+<rect x="350" y="340" width="250" height="150" rx="12" fill="#131E42" stroke="#2A3A70"/>
+<text x="368" y="372" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="17" font-weight="600" fill="#F3F5FB">MyService</text>
+<text x="368" y="398" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">Windows Service, .NET 4.8.1</text>
+<text x="368" y="419" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">Headless, runs as LocalSystem</text>
+<text x="368" y="440" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">Config: MyService.exe.config</text>
+<text x="584" y="370" text-anchor="end" font-family="'Cascadia Mono',Consolas,ui-monospace,Menlo,monospace" font-size="11" fill="#7C93FF">SERVICE</text>
+<rect x="650" y="340" width="250" height="150" rx="12" fill="#131E42" stroke="#2A3A70"/>
+<text x="668" y="372" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="17" font-weight="600" fill="#F3F5FB">Stream Forwarding</text>
+<text x="668" y="398" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">WinForms, .NET 6</text>
+<text x="668" y="419" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">Load Profiles, Start / Stop</text>
+<text x="668" y="440" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">Relays one RTSP stream</text>
+<text x="884" y="370" text-anchor="end" font-family="'Cascadia Mono',Consolas,ui-monospace,Menlo,monospace" font-size="11" fill="#7C93FF">TOOL</text>
+<rect x="350" y="540" width="250" height="120" rx="12" fill="#131E42" stroke="#2A3A70"/>
+<text x="368" y="572" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="17" font-weight="600" fill="#F3F5FB">Windows Event Log</text>
+<text x="368" y="598" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">Application log, source</text>
+<text x="368" y="619" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">MotionDetectionService</text>
+<rect x="650" y="540" width="250" height="120" rx="12" fill="#131E42" stroke="#2A3A70"/>
+<text x="668" y="572" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="17" font-weight="600" fill="#F3F5FB">FFmpeg</text>
+<text x="668" y="598" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">Xabe.FFmpeg 5.2.6</text>
+<text x="668" y="619" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">-c copy, RTSP over TCP</text>
+<rect x="980" y="470" width="240" height="150" rx="12" fill="#131E42" stroke="#2A3A70"/>
+<text x="998" y="502" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="17" font-weight="600" fill="#F3F5FB">RTSP server</text>
+<text x="998" y="528" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">RelayOutputUrl (service)</text>
+<text x="998" y="549" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">or the tool's output box</text>
+<text x="998" y="570" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#B9C2DE">Receives the copied stream</text>
+<path d="M270 225H346" fill="none" stroke="#7C93FF" stroke-width="2" marker-end="url(#za-ah)"/>
+<text x="310" y="216" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#B9C2DE">RTSP</text>
+<path d="M270 415H346" fill="none" stroke="#7C93FF" stroke-width="2" marker-end="url(#za-ah)"/>
+<text x="310" y="406" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#B9C2DE">RTSP</text>
+<path d="M775 150V134H230V196" fill="none" stroke="#B9C2DE" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#za-ahc)"/>
+<text x="500" y="127" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#B9C2DE">ONVIF SOAP 1.2, HTTP digest</text>
+<path d="M600 225H646" fill="none" stroke="#B9C2DE" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#za-ahc)"/>
+<text x="625" y="216" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#B9C2DE">opens</text>
+<path d="M475 490V536" fill="none" stroke="#B9C2DE" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#za-ahc)"/>
+<text x="486" y="518" text-anchor="start" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#B9C2DE">motion events</text>
+<path d="M600 470H625V585H646" fill="none" stroke="#B9C2DE" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#za-ahc)"/>
+<text x="0" y="0" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#B9C2DE" transform="translate(619 528) rotate(-90)">on motion</text>
+<path d="M775 490V536" fill="none" stroke="#B9C2DE" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#za-ahc)"/>
+<text x="786" y="518" text-anchor="start" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#B9C2DE">Start / Stop</text>
+<path d="M110 450V677H775V664" fill="none" stroke="#7C93FF" stroke-width="2" marker-end="url(#za-ah)"/>
+<text x="470" y="671" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#B9C2DE">RTSP in (pulled by FFmpeg)</text>
+<path d="M900 600H976" fill="none" stroke="#7C93FF" stroke-width="2" marker-end="url(#za-ah)"/>
+<text x="938" y="591" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#B9C2DE">RTSP out</text>
+<path d="M960 170H1000" stroke="#7C93FF" stroke-width="2"/>
+<text x="1010" y="174" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#B9C2DE">video (RTSP)</text>
+<path d="M960 196H1000" stroke="#B9C2DE" stroke-width="1.6" stroke-dasharray="5 4"/>
+<text x="1010" y="200" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#B9C2DE">control and events</text>
+</svg>

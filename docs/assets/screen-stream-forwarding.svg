@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" role="img" aria-labelledby="t d">
+<title id="t">ZoneWatch - Stream Forwarding window</title>
+<desc id="d">The ZoneWatch Stream Forwarding tool relaying Yard Cam 02 to a local RTSP server. The input box holds the camera's RTSP URL and the output box the relay target. The log shows the FFmpeg command built by Load Profiles (-c copy, RTSP over TCP) and the capture starting; Start Forwarding RTSP is disabled while the relay runs.</desc>
+<defs>
+<linearGradient id="zw-canvas" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EEF1FA"/><stop offset="1" stop-color="#E1E7F6"/></linearGradient>
+<linearGradient id="zw-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B7C6D6"/><stop offset="0.18" stop-color="#D6DEE7"/></linearGradient>
+<linearGradient id="zw-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CFC6B5"/><stop offset="1" stop-color="#D9D1C1"/></linearGradient>
+<linearGradient id="zw-asphalt" x1="0" y1="176" x2="0" y2="360" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8E9298"/><stop offset="1" stop-color="#62676E"/></linearGradient>
+<radialGradient id="zw-vig" cx="50%" cy="50%" r="75%"><stop offset="0.55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.28"/></radialGradient>
+<clipPath id="zw-cam"><rect width="640" height="360"/></clipPath>
+<clipPath id="zw-rtb"><rect x="657" y="1" width="269" height="390"/></clipPath>
+<clipPath id="zw-cmb"><rect x="972" y="44" width="162" height="31"/></clipPath>
+<clipPath id="zw-win"><rect width="1200" height="476" rx="8"/></clipPath>
+<linearGradient id="zw-ibg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1A2856"/><stop offset="1" stop-color="#0B1226"/></linearGradient>
+<symbol id="zw-icon" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="url(#zw-ibg)"/><path d="M170 182H342L420 374H92Z" fill="#3D5CFF" fill-opacity="0.2" stroke="#5B7CFF" stroke-width="32" stroke-linejoin="round"/><rect x="196" y="138" width="120" height="180" fill="none" stroke="#FF4A43" stroke-width="30"/><circle cx="256" cy="228" r="22" fill="#FF4A43"/></symbol>
+<filter id="zw-shadow" x="-10%" y="-10%" width="120%" height="140%"><feGaussianBlur stdDeviation="16"/></filter>
+<clipPath id="zf-win"><rect x="0" y="0" width="1102" height="418" rx="8"/></clipPath>
+<clipPath id="zf-in"><rect x="13" y="13" width="326" height="21"/></clipPath>
+<clipPath id="zf-out"><rect x="397" y="13" width="325" height="21"/></clipPath>
+<clipPath id="zf-log"><rect x="13" y="61" width="690" height="145"/></clipPath>
+</defs>
+<rect width="1280" height="800" fill="url(#zw-canvas)"/>
+<g transform="translate(89 191)">
+<rect x="10" y="22" width="1082" height="402" rx="12" fill="#1A2856" fill-opacity="0.28" filter="url(#zw-shadow)"/>
+<g clip-path="url(#zf-win)">
+<rect width="1102" height="418" fill="#F0F0F0"/>
+<rect width="1102" height="32" fill="#F3F4F8"/>
+<use href="#zw-icon" x="12" y="8" width="16" height="16"/>
+<text x="40" y="20.5" font-family="'Segoe UI Variable Text','Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#1B1B1B">ZoneWatch - Stream Forwarding</text>
+<g stroke="#1B1B1B" stroke-width="1" fill="none">
+<path d="M982 16.5H992"/>
+<rect x="1028.5" y="11.5" width="9" height="9" rx="1.5"/>
+<path d="M1074 11L1084 21M1084 11L1074 21"/>
+</g>
+<g transform="translate(0 32) scale(1.5)">
+<rect width="735" height="257" fill="#F0F0F0"/>
+<rect x="12.5" y="12.5" width="327" height="22" fill="#FFFFFF" stroke="#7A7A7A"/><g clip-path="url(#zf-in)"><text x="16" y="27.7" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#000000">rtsp://10.20.4.12:554/cam/realmonitor?channel=1&amp;subtype=0</text></g>
+<text x="346" y="30" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="16" font-weight="700" fill="#000000">---&gt;</text>
+<rect x="396.5" y="12.5" width="326" height="22" fill="#FFFFFF" stroke="#7A7A7A"/><g clip-path="url(#zf-out)"><text x="400" y="27.7" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#000000">rtsp://10.20.4.40:8554/yard-cam-02</text></g>
+<rect x="12.5" y="60.5" width="710" height="146" fill="#FFFFFF" stroke="#7A7A7A"/>
+<g clip-path="url(#zf-log)" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#000000">
+<text x="16" y="73.5">3/14/2026 4:45:03 PM</text>
+<text x="16" y="89.5">FFmpeg Command:  -f rtsp -i "rtsp://10.20.4.12:554/cam/realmonitor?channel=1&amp;subtype=0" -map 0:0 -c copy</text>
+<text x="16" y="105.5">-rtsp_transport tcp -timeout 3000000 -v error -f rtsp "rtsp://10.20.4.40:8554/yard-cam-02" -n</text>
+<text x="16" y="137.5">3/14/2026 4:45:03 PM</text>
+<text x="16" y="153.5">Profile loaded successfully. Time taken: 1.8421377 seconds</text>
+<text x="16" y="185.5">3/14/2026 4:45:12 PM</text>
+<text x="16" y="201.5">Stream capture started. Time taken: 3/14/2026 4:45:12 PM</text>
+</g>
+<rect x="705" y="61" width="17" height="145" fill="#F0F0F0"/><path d="M709.5 71L713.5 67L717.5 71M709.5 196L713.5 200L717.5 196" fill="none" stroke="#606060" stroke-width="1.2"/><rect x="707" y="115" width="13" height="73" rx="1" fill="#CDCDCD"/>
+<rect x="12.5" y="213.5" width="155" height="31" fill="#E1E1E1" stroke="#ADADAD"/><text x="90" y="233.2" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#000000">Load Profiles</text>
+<rect x="174.5" y="213.5" width="184" height="31" fill="#CCCCCC" stroke="#BFBFBF"/><text x="266.5" y="233.2" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#838383">Start Forwarding RTSP</text>
+<rect x="382.5" y="213.5" width="164" height="31" fill="#E1E1E1" stroke="#ADADAD"/><text x="464.5" y="233.2" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#000000" xml:space="preserve">Clear  Logs</text>
+<rect x="553.5" y="213.5" width="169" height="31" fill="#E1E1E1" stroke="#ADADAD"/><text x="638" y="233.2" text-anchor="middle" font-family="'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif" font-size="12" fill="#000000">Stop Forwarding RTSP</text>
+</g>
+</g>
+<rect x="0.5" y="0.5" width="1101" height="417" rx="7.5" fill="none" stroke="#C4CAD8"/>
+</g>
+</svg>

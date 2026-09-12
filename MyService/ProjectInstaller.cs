@@ -28,6 +28,8 @@ namespace MyService
 
             // Configure the service installer
             this.serviceInstaller.ServiceName = "MyService";
+            this.serviceInstaller.DisplayName = "ZoneWatch Motion Detection Service";
+            this.serviceInstaller.Description = "ZoneWatch: watches an RTSP camera for motion and writes events to the Application Event Log.";
             this.serviceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
 
             // Add the installers to the collection
@@ -38,22 +40,14 @@ namespace MyService
         }
         public override void Install( System.Collections.IDictionary stateSaver )
         {
-            try
+            // Installing a service needs an elevated prompt. Fail so InstallUtil reports it,
+            // instead of relaunching without arguments and exiting with success.
+            if (!IsAdministrator())
             {
-                // Check if the application is running with administrator privileges
-                if (!IsAdministrator())
-                {
-                    RestartAsAdministrator();
-                    return;
-                }
-
-                base.Install(stateSaver);
-
+                throw new System.Configuration.Install.InstallException("Run InstallUtil from an elevated (Run as administrator) command prompt.");
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error during installation: {ex.Message}");
-            }
+
+            base.Install(stateSaver);
         }
 
         // Helper method to check if the application is running with administrator privileges
@@ -63,27 +57,6 @@ namespace MyService
             var principal = new System.Security.Principal.WindowsPrincipal(identity);
             Console.WriteLine(principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator));
             return principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator);
-        }
-
-        // Helper method to restart the application with elevated privileges
-        private static void RestartAsAdministrator()
-        {
-            var processStartInfo = new ProcessStartInfo(Assembly.GetEntryAssembly().Location)
-            {
-                UseShellExecute = true,
-                Verb = "runas" 
-            };
-
-            try
-            {
-                Process.Start(processStartInfo);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error restarting as administrator: {ex.Message}");
-            }
-
-            Environment.Exit(0);
         }
     }
 }

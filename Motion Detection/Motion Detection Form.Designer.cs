@@ -38,6 +38,7 @@ namespace Motion_Dection
             label1 = new Label();
             panel1 = new Panel();
             button4 = new Button();
+            buttonPtz = new Button();
             pictureBox4 = new PictureBox();
             fpsLabel = new Label();
             comboBox1 = new ComboBox();
@@ -122,6 +123,7 @@ namespace Motion_Dection
             // 
             // panel1
             // 
+            panel1.Controls.Add(buttonPtz);
             panel1.Controls.Add(button4);
             panel1.Controls.Add(pictureBox4);
             panel1.Controls.Add(fpsLabel);
@@ -146,6 +148,16 @@ namespace Motion_Dection
             button4.Text = "Undo";
             button4.UseVisualStyleBackColor = true;
             button4.Click += button4_Click;
+            //
+            // buttonPtz
+            //
+            buttonPtz.Location = new Point(315, 276);
+            buttonPtz.Name = "buttonPtz";
+            buttonPtz.Size = new Size(182, 25);
+            buttonPtz.TabIndex = 47;
+            buttonPtz.Text = "PTZ Controls...";
+            buttonPtz.UseVisualStyleBackColor = true;
+            buttonPtz.Click += buttonPtz_Click;
             // 
             // pictureBox4
             // 
@@ -154,6 +166,8 @@ namespace Motion_Dection
             pictureBox4.Size = new Size(113, 34);
             pictureBox4.TabIndex = 45;
             pictureBox4.TabStop = false;
+            pictureBox4.AccessibleName = "Motion indicator";
+            pictureBox4.AccessibleDescription = "Not running";
             // 
             // fpsLabel
             // 
@@ -168,7 +182,6 @@ namespace Motion_Dection
             // 
             comboBox1.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "rtsp://192.168.222.253:8556/mgfmallgurugram", "rtsp://aivid:aivid_2022@192.168.111.105:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif", "rtsp://192.168.222.253:8556/aivid50" });
             comboBox1.Location = new Point(315, 43);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(182, 33);
@@ -203,7 +216,7 @@ namespace Motion_Dection
             labelDateTime.Name = "labelDateTime";
             labelDateTime.Size = new Size(38, 15);
             labelDateTime.TabIndex = 40;
-            labelDateTime.Text = "label1";
+            labelDateTime.Text = "";
             // 
             // button2
             // 
@@ -289,7 +302,7 @@ namespace Motion_Dection
             Controls.Add(label1);
             Controls.Add(trackBar1);
             Name = "MotionDetectionForm";
-            Text = "Form2";
+            Text = "ZoneWatch - Motion Detection";
             Load += MotionDetectionForm_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
@@ -333,5 +346,6 @@ namespace Motion_Dection
         private TabPage tabPage4;
         private PictureBox pictureBox5;
         private Button button4;
+        private Button buttonPtz;
     }
 }

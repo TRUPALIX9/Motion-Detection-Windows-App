@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="128" viewBox="0 0 480 128" role="img" aria-labelledby="zwl-t zwl-d">
+  <title id="zwl-t">ZoneWatch</title>
+  <desc id="zwl-d">ZoneWatch logo: a navy tile with a blue motion-zone polygon, a red detection box and centroid dot, followed by the ZoneWatch wordmark.</desc>
+  <defs>
+    <linearGradient id="zwl-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1A2856"/>
+      <stop offset="1" stop-color="#0B1226"/>
+    </linearGradient>
+    <style>
+      .zwl-sans{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif}
+    </style>
+  </defs>
+  <g transform="translate(8 8) scale(0.21875)">
+    <rect width="512" height="512" rx="112" fill="url(#zwl-bg)"/>
+    <path d="M170 182H342L420 374H92Z" fill="#3D5CFF" fill-opacity="0.2" stroke="#5B7CFF" stroke-width="24" stroke-linejoin="round"/>
+    <rect x="196" y="138" width="120" height="180" fill="none" stroke="#FF4A43" stroke-width="22"/>
+    <circle cx="256" cy="228" r="17" fill="#FF4A43"/>
+  </g>
+  <text x="142" y="83" class="zwl-sans" font-size="54" font-weight="600" letter-spacing="-0.5" fill="#16203A">Zone<tspan fill="#2447D6">Watch</tspan></text>
+</svg>

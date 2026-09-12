@@ -13,15 +13,25 @@ namespace MyService
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private Stopwatch stopwatch = new Stopwatch();
         private Service1 _service1;
+        private readonly Task _initialization;
 
         public ffmpeg( Service1 service1 )
         {
             _service1 = service1;
-            _ = InitializeFFmpeg();
+            // Awaited in LoadProfiles, so the first relay never races the download.
+            _initialization = InitializeFFmpeg();
         }
 
+        // Uses a pre-installed ffmpeg when FFmpegDirectory / ZONEWATCH_FFMPEG_DIR is set;
+        // otherwise falls back to downloading it.
         public async Task InitializeFFmpeg()
         {
+            string ffmpegDirectory = Service1.GetSetting("ZONEWATCH_FFMPEG_DIR", "FFmpegDirectory");
+            if (!string.IsNullOrEmpty(ffmpegDirectory))
+            {
+                FFmpeg.SetExecutablesPath(ffmpegDirectory);
+                return;
+            }
             await FFmpegDownloader.GetLatestVersion(FFmpegVersion.Full);
         }
         public async Task LoadProfiles( string inputFile, string outputFile )
@@ -29,8 +39,8 @@ namespace MyService
             try
             {
                 stopwatch.Start();
+                await _initialization;
                 var mediaInfo = await FFmpeg.GetMediaInfo(inputFile);
-                _service1.warningEvent(inputFile+"   -- " + outputFile);
                 _conversion = Xabe.FFmpeg.FFmpeg.Conversions.New()
                                 .SetOutput(outputFile)
                                 .SetOutputFormat(Format.rtsp)
@@ -43,12 +53,18 @@ namespace MyService
             }
             catch (Exception ex)
             {
-                _service1.warningEvent("inputFile: "+ inputFile +Environment.NewLine + " OutputFile: " + outputFile + Environment.NewLine + "Error: "+ ex.Message.ToString() + Environment.NewLine + "StackTrace: " +ex.StackTrace.ToString(),664);
+                // The input and output URLs are left out of the Event Log because they can contain credentials.
+                _service1.warningEvent("Error loading the relay profile: " + ex.Message.ToString() + Environment.NewLine + "StackTrace: " + ex.StackTrace.ToString(), 664);
             }
         }
 
         public async void StartCapture()
         {
+            if (_conversion == null)
+            {
+                // No relay configured, or the relay profile failed to load (already logged).
+                return;
+            }
             try
             {
                 stopwatch.Start();
