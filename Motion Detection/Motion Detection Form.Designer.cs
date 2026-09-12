@@ -166,6 +166,8 @@ namespace Motion_Dection
             pictureBox4.Size = new Size(113, 34);
             pictureBox4.TabIndex = 45;
             pictureBox4.TabStop = false;
+            pictureBox4.AccessibleName = "Motion indicator";
+            pictureBox4.AccessibleDescription = "Not running";
             // 
             // fpsLabel
             // 
@@ -214,7 +216,7 @@ namespace Motion_Dection
             labelDateTime.Name = "labelDateTime";
             labelDateTime.Size = new Size(38, 15);
             labelDateTime.TabIndex = 40;
-            labelDateTime.Text = "label1";
+            labelDateTime.Text = "";
             // 
             // button2
             // 
